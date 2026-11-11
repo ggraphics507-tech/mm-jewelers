@@ -16,7 +16,7 @@
    importa se ILUMINA. Nada salta ni rebota: el movimiento es lento,
    como el de un vendedor que saca un reloj de la vitrina.
    Verbos: ILUMINAR (la pieza se enciende), GIRAR (la pieza se vuelve
-   hacia ti), DESTELLAR (un reflejo cruza el cristal). Nada más.
+   hacia ti), DESTELLAR (un reflejo cruza los botones). Nada más.
    El oro PINTA y ESCRIBE sobre negro (9:1); se usa con mesura.
    Zonas quietas: textos, ficha técnica, contacto.
    ============================================================ */
@@ -144,31 +144,22 @@ section{padding:var(--step) 0;position:relative}
    ILUMINAR + GIRAR: el estuche activo se enciende, el reloj gira hacia
    ti y un destello cruza el cristal. Los demás quedan en penumbra. */
 .vitrina{overflow:hidden}
-.mostrador{position:relative;padding:10px 0 0}
-.mostrador::after{content:"";display:block;height:14px;margin:0 var(--pad);border-radius:0 0 8px 8px;
-  background:linear-gradient(#2a2318,#0c0a07);box-shadow:0 20px 40px rgba(0,0,0,.6),inset 0 1px 0 rgba(234,215,168,.25)}
-.estuches{list-style:none;margin:0;padding:0 var(--pad);display:flex;justify-content:center;gap:clamp(10px,1.4vw,22px)}
-.estuche{flex:1 1 0;max-width:180px;min-width:0;perspective:900px;position:relative}
+/* Sin muebles: solo la pieza sobre negro. La activa sale de la penumbra
+   con una luz cálida detrás; las demás quedan en sombra. */
+.mostrador{position:relative;padding:20px 0 10px}
+.estuches{list-style:none;margin:0;padding:0 var(--pad);display:flex;justify-content:center;align-items:flex-end;gap:clamp(6px,1vw,16px)}
+.estuche{flex:1 1 0;max-width:170px;min-width:0;position:relative}
 .estuche button{all:unset;display:block;cursor:pointer;width:100%}
 .estuche button:focus-visible{outline:1px solid var(--gold);outline-offset:6px}
-.cristal{position:relative;aspect-ratio:3/4.6;border-radius:6px;overflow:hidden;
-  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015) 40%,rgba(0,0,0,.3)),#0b0b0e;
-  box-shadow:inset 0 0 0 1px rgba(234,215,168,.16),inset 0 30px 40px -20px rgba(255,255,255,.06);transition:box-shadow var(--t-mid) var(--ease)}
-/* foco de joyería desde arriba */
-.cristal::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(255,244,214,.35),transparent 70%);opacity:0;transition:opacity var(--t-mid) var(--ease)}
-/* destello que cruza el cristal */
-.cristal::after{content:"";position:absolute;inset:-20% -60%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.18) 50%,transparent 58%);translate:-60% 0;transition:translate 0s}
-.cojin{position:absolute;left:12%;right:12%;bottom:9%;height:14%;border-radius:50%;
-  background:radial-gradient(ellipse at 50% 30%,#3a2f22,#14100b 70%);box-shadow:inset 0 2px 6px rgba(234,215,168,.15)}
-.pieza{position:absolute;left:14%;right:14%;top:8%;bottom:15%;display:grid;place-items:center;
-  transform:rotateY(32deg) scale(.9);filter:brightness(.42) saturate(.6);transform-style:preserve-3d;
-  transition:transform var(--t-slow) var(--ease),filter var(--t-mid) var(--ease)}
-.pieza svg,.pieza img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.65))}
-.placa{margin-top:14px;text-align:center;font:500 10px/1.3 var(--f-sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);transition:color var(--t-fast)}
-.estuche.activa .cristal{box-shadow:inset 0 0 0 1px rgba(234,215,168,.55),inset 0 30px 40px -20px rgba(255,255,255,.12),0 0 60px rgba(201,169,106,.18)}
+.cristal{position:relative;aspect-ratio:1/1.7;display:grid;place-items:center}
+.cristal::before{content:"";position:absolute;left:-30%;right:-30%;top:5%;bottom:5%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(234,215,168,.22),rgba(201,169,106,.06) 55%,transparent);opacity:0;transition:opacity var(--t-mid) var(--ease)}
+.pieza{position:relative;width:86%;height:100%;display:grid;place-items:center;
+  filter:brightness(.5) saturate(.75);transform:scale(.88);transition:transform var(--t-slow) var(--ease),filter var(--t-mid) var(--ease)}
+.pieza svg,.pieza img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 24px 24px rgba(0,0,0,.8))}
+.placa{margin-top:10px;text-align:center;font:500 10px/1.3 var(--f-sans);letter-spacing:.24em;text-transform:uppercase;color:transparent;transition:color var(--t-fast)}
 .estuche.activa .cristal::before{opacity:1}
-.estuche.activa .cristal::after{translate:60% 0;transition:translate 1.6s var(--ease)}
-.estuche.activa .pieza{transform:rotateY(0) translateZ(40px) scale(1.08);filter:none}
+.estuche.activa .pieza{transform:scale(1.12);filter:none}
 .estuche.activa .placa{color:var(--gold-lit)}
 .vit-info{display:grid;grid-template-columns:1fr auto;gap:10px 40px;align-items:end;margin-top:clamp(40px,5vw,64px);padding-top:28px;border-top:1px solid var(--line)}
 .vit-info h3{font-size:clamp(2rem,3.6vw,3.4rem)}
@@ -938,7 +929,7 @@ const vitrina = RELOJES.slice(0, EN_VITRINA);
 vitrina.forEach((w, i) => {
   const li = document.createElement("li");
   li.className = "estuche";
-  li.innerHTML = `<button type="button" aria-label="${w.marca} ${w.modelo}"><div class="cristal"><span class="cojin"></span><div class="pieza">${visual(w, false)}</div></div><p class="placa">${w.marca}</p></button>`;
+  li.innerHTML = `<button type="button" aria-label="${w.marca} ${w.modelo}"><div class="cristal"><div class="pieza">${visual(w, false)}</div></div><p class="placa">${w.marca}</p></button>`;
   ponerHora(li, HORA_FOTO, false);
   estuchesEl.append(li);
 });
