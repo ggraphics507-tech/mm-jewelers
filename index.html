@@ -367,8 +367,9 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 .escena__fondo.on{opacity:.75}
 .escena__fondo:has(video){background:#000}
 .escena__fondo:has(video).on{opacity:1}
-.escena__fondo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
-.escena__fondo:has(video)::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 34% 52%,transparent 0,rgba(7,7,10,.55) 45%,rgba(7,7,10,.92) 80%),linear-gradient(90deg,transparent 40%,rgba(7,7,10,.85))}
+.escena__fondo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.95}
+/* El video se ve de verdad; solo se oscurece el lado del texto para que se lea */
+.escena__fondo:has(video)::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,7,10,.15) 0%,rgba(7,7,10,.2) 40%,rgba(7,7,10,.82) 62%,rgba(7,7,10,.92)),linear-gradient(transparent 75%,rgba(7,7,10,.6))}
 .escena__reloj{position:relative;height:100%;display:grid;place-items:center;rotate:var(--giro,0deg);scale:var(--zoom,1);transition:rotate .3s linear}
 .escena__reloj .flota{position:absolute;width:min(46%,340px);opacity:0;transform:translateY(60px) rotate(-14deg) scale(.86);filter:blur(6px);
   transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease),filter var(--t-slow) var(--ease)}
