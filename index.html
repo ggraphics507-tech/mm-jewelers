@@ -244,6 +244,8 @@ dialog::backdrop{background:rgba(4,4,6,.92);backdrop-filter:blur(6px)}
 .vistas button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:6px;font:500 9px/1 var(--f-sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
 .vistas button span{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow var(--t-fast),background var(--t-fast)}
 .vistas button img{width:70%;height:70%;object-fit:contain}
+.vistas .play{font-size:16px;color:var(--gold-lit);padding-left:3px}
+.ficha__vis .lienzo>.lienzo__video{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:10px;align-self:center;filter:none;box-shadow:0 30px 60px rgba(0,0,0,.6)}
 .vistas button[aria-pressed="true"]{color:var(--gold-lit)}
 .vistas button[aria-pressed="true"] span{box-shadow:inset 0 0 0 1px var(--gold);background:rgba(201,169,106,.08)}
 .vistas button:focus-visible span{outline:1px solid var(--gold);outline-offset:3px}
@@ -327,6 +329,10 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 .escena__fondo{position:absolute;inset:0;opacity:0;transition:opacity var(--t-slow) var(--ease);
   background:radial-gradient(circle at 34% 52%,var(--tono) 0%,color-mix(in oklab,var(--tono) 35%,transparent) 32%,transparent 62%)}
 .escena__fondo.on{opacity:.75}
+.escena__fondo:has(video){background:#000}
+.escena__fondo:has(video).on{opacity:1}
+.escena__fondo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.escena__fondo:has(video)::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 34% 52%,transparent 0,rgba(7,7,10,.55) 45%,rgba(7,7,10,.92) 80%),linear-gradient(90deg,transparent 40%,rgba(7,7,10,.85))}
 .escena__reloj{position:relative;height:100%;display:grid;place-items:center;rotate:var(--giro,0deg);scale:var(--zoom,1);transition:rotate .3s linear}
 .escena__reloj .flota{position:absolute;width:min(46%,340px);opacity:0;transform:translateY(60px) rotate(-14deg) scale(.86);filter:blur(6px);
   transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease),filter var(--t-slow) var(--ease)}
@@ -354,6 +360,10 @@ dialog.menu[open] li{opacity:1;translate:0 0}
   background:radial-gradient(circle at 50% 55%,color-mix(in oklab,var(--c) 70%,#fff 8%),var(--c) 35%,#050506 85%)}
 .hist__vis>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hist__vis .flota{width:min(44%,240px)}
+.hist__vis video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity var(--t-slow) var(--ease)}
+.hist__vis video.lista{opacity:1}
+.hist__vis::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,rgba(14,14,18,.85)),linear-gradient(transparent 70%,rgba(0,0,0,.4));pointer-events:none}
+.hist__vis .marca-agua{z-index:1}
 .hist__vis .marca-agua{position:absolute;left:6%;bottom:4%;font:200 clamp(5rem,12vw,11rem)/.8 var(--f-serif);color:rgba(255,255,255,.06);pointer-events:none}
 .hist__txt{display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4vw,64px)}
 .hist__txt h3{font-size:clamp(2.4rem,4.2vw,4.2rem)}
@@ -503,8 +513,8 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 <section class="escenario" id="escenario" aria-label="Piezas destacadas">
   <div class="escena">
     <div class="escena__fondo" style="--tono:#7a3f2c"></div>
-    <div class="escena__fondo" style="--tono:#1d3a6e"></div>
-    <div class="escena__fondo" style="--tono:#1f6a3a"></div>
+    <div class="escena__fondo" style="--tono:#1d3a6e"><video class="vvid" data-src="video/esc-royaloak.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
+    <div class="escena__fondo" style="--tono:#1f6a3a"><video class="vvid" data-src="video/esc-verde.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
     <div class="escena__reloj" id="escena-reloj"></div>
     <div class="escena__txt" id="escena-txt">
       <article>
@@ -541,13 +551,13 @@ dialog.menu[open] li{opacity:1;translate:0 0}
     <p data-en="A watch of this level isn't bought for telling the time. It's bought for what it says about you.">Un reloj de este nivel no se compra para saber la hora. Se compra por lo que dice de ti.</p>
   </div>
   <div class="pila" id="pila">
-    <article class="hist" style="--i:0"><div class="hist__vis" style="--c:#2b2d33"><span class="marca-agua">I</span><div class="flota" data-reloj="134303"></div></div>
+    <article class="hist" style="--i:0"><div class="hist__vis" style="--c:#2b2d33"><span class="marca-agua">I</span><video class="vvid" data-src="video/hist-ambicion.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
       <div class="hist__txt"><p class="eti">01</p><h3 class="serif" data-en-html="Time<br><em>and ambition</em>">El tiempo<br><em>y la ambición</em></h3><p data-en="For the meeting that changes everything. The watch that arrives before you do.">Para la reunión que lo cambia todo. El reloj que llega antes que tú.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
-    <article class="hist" style="--i:1"><div class="hist__vis" style="--c:#14284f"><span class="marca-agua">II</span><div class="flota" data-reloj="126613LB"></div></div>
+    <article class="hist" style="--i:1"><div class="hist__vis" style="--c:#14284f"><span class="marca-agua">II</span><video class="vvid" data-src="video/hist-mar.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
       <div class="hist__txt"><p class="eti">02</p><h3 class="serif" data-en-html="Time<br><em>and the sea</em>">El tiempo<br><em>y el mar</em></h3><p data-en="Built to go down deep and come back up untouched. Like the best weekends.">Hecho para bajar a lo profundo y volver intacto. Como los mejores fines de semana.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
-    <article class="hist" style="--i:2"><div class="hist__vis" style="--c:#1d5c66"><span class="marca-agua">III</span><div class="flota" data-reloj="276248RBR"></div></div>
-      <div class="hist__txt"><p class="eti">03</p><h3 class="serif" data-en-html="Time<br><em>and elegance</em>">El tiempo<br><em>y la elegancia</em></h3><p data-en="Yellow gold, a turquoise dial and a ring of diamonds. Elegance never needed to shout.">Oro amarillo, esfera turquesa y un aro de diamantes. La elegancia nunca necesitó gritar.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
-    <article class="hist" style="--i:3"><div class="hist__vis" style="--c:#16264a"><span class="marca-agua">IV</span><div class="flota" data-reloj="RD#5"></div></div>
+    <article class="hist" style="--i:2"><div class="hist__vis" style="--c:#1d5c66"><span class="marca-agua">III</span><video class="vvid" data-src="video/hist-elegancia.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
+      <div class="hist__txt"><p class="eti">03</p><h3 class="serif" data-en-html="Time<br><em>and elegance</em>">El tiempo<br><em>y la elegancia</em></h3><p data-en="Yellow gold and a ring of diamonds. Elegance never needed to shout.">Oro amarillo y un aro de diamantes. La elegancia nunca necesitó gritar.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
+    <article class="hist" style="--i:3"><div class="hist__vis" style="--c:#16264a"><span class="marca-agua">IV</span><video class="vvid" data-src="video/hist-legado.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
       <div class="hist__txt"><p class="eti">04</p><h3 class="serif" data-en-html="Time<br><em>and legacy</em>">El tiempo<br><em>y el legado</em></h3><p data-en="Some watches are worn. Others are handed down. These are of the second kind.">Hay relojes que se usan. Otros se heredan. Estos son de los segundos.</p><a class="btn btn--linea" href="#cita" data-en="Book a viewing">Agendar cita</a></div></article>
   </div>
 </section>
@@ -722,23 +732,23 @@ const RELOJES = [
    caja:"31 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 2232", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
   // ✔ REAL · recibido del cliente
   {marca:"Rolex", modelo:"Submariner Date", ref:"126613LB", precio:20200, img:"img/relojes/sub-126613lb-frente.webp",
-   vistas:[["Frente","Front","img/relojes/sub-126613lb-frente.webp"],["Lado","Side","img/relojes/sub-126613lb-lado.webp"],["Fondo","Back","img/relojes/sub-126613lb-fondo.webp"]],
+   vistas:[["Frente","Front","img/relojes/sub-126613lb-frente.webp"],["Lado","Side","img/relojes/sub-126613lb-lado.webp"],["Fondo","Back","img/relojes/sub-126613lb-fondo.webp"],["Video","Video","video/ficha-submariner.mp4"]],
    caja:"41 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 3235", hermet:"300 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
   // ✔ REAL · recibido del cliente
   {marca:"Rolex", modelo:"Submariner Date", ref:"126613LN", precio:20200, img:"img/relojes/sub-126613ln-frente.webp",
-   vistas:[["Frente","Front","img/relojes/sub-126613ln-frente.webp"],["Lado","Side","img/relojes/sub-126613ln-lado.webp"],["Fondo","Back","img/relojes/sub-126613ln-fondo.webp"]],
+   vistas:[["Frente","Front","img/relojes/sub-126613ln-frente.webp"],["Lado","Side","img/relojes/sub-126613ln-lado.webp"],["Fondo","Back","img/relojes/sub-126613ln-fondo.webp"],["Video","Video","video/ficha-submariner.mp4"]],
    caja:"41 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 3235", hermet:"300 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
   // ✔ REAL · recibido del cliente
   {marca:"Rolex", modelo:"Submariner Date", ref:"126610LV", precio:12350, img:"img/relojes/sub-126610lv-frente.webp",
-   vistas:[["Frente","Front","img/relojes/sub-126610lv-frente.webp"],["Lado","Side","img/relojes/sub-126610lv-lado.webp"],["Fondo","Back","img/relojes/sub-126610lv-fondo.webp"]],
+   vistas:[["Frente","Front","img/relojes/sub-126610lv-frente.webp"],["Lado","Side","img/relojes/sub-126610lv-lado.webp"],["Fondo","Back","img/relojes/sub-126610lv-fondo.webp"],["Video","Video","video/ficha-submariner.mp4"]],
    caja:"41 mm · Oystersteel", mov:"Automático · Cal. 3235", hermet:"300 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
   // ✔ REAL · recibido del cliente
   {marca:"Rolex", modelo:"Yacht-Master II", ref:"126680", precio:21100, img:"img/relojes/ym2-126680-frente.webp",
-   vistas:[["Frente","Front","img/relojes/ym2-126680-frente.webp"],["Lado","Side","img/relojes/ym2-126680-lado.webp"],["Fondo","Back","img/relojes/ym2-126680-fondo.webp"]],
+   vistas:[["Frente","Front","img/relojes/ym2-126680-frente.webp"],["Lado","Side","img/relojes/ym2-126680-lado.webp"],["Fondo","Back","img/relojes/ym2-126680-fondo.webp"],["Video","Video","video/ficha-yachtmaster.mp4"]],
    caja:"44 mm · Oystersteel", mov:"Automático · Cal. 4161", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
   // ✔ REAL · fotos recibidas · REFERENCIA Y PRECIO PENDIENTES
   {marca:"Audemars Piguet", modelo:"Royal Oak Extraplano Tourbillon Volante Cronógrafo", ref:"RD#5", precio:null, img:"img/relojes/ap-ro-rd5-frente.webp",
-   vistas:[["Frente","Front","img/relojes/ap-ro-rd5-frente.webp"],["Lado","Side","img/relojes/ap-ro-rd5-lado.webp"],["Fondo","Back","img/relojes/ap-ro-rd5-fondo.webp"]],
+   vistas:[["Frente","Front","img/relojes/ap-ro-rd5-frente.webp"],["Lado","Side","img/relojes/ap-ro-rd5-lado.webp"],["Fondo","Back","img/relojes/ap-ro-rd5-fondo.webp"],["Video","Video","video/hero.mp4"]],
    caja:"Acero", mov:"Automático · Tourbillon volante · Cronógrafo", hermet:"—", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}}
 ];
 // Siluetas de lo que viene (se muestran borrosas en «Próximamente»)
@@ -1030,9 +1040,12 @@ function abrir(i) {
   (w.vistas || []).forEach(([es, en, src], k) => {
     const b = document.createElement("button");
     b.type = "button"; b.setAttribute("aria-pressed", k === 0);
-    b.innerHTML = `<span><img src="${src}" alt=""></span>${T(es, en)}`;
+    const esVideo = src.endsWith(".mp4");
+    b.innerHTML = esVideo ? `<span class="play">▶</span>${T(es, en)}` : `<span><img src="${src}" alt=""></span>${T(es, en)}`;
     b.addEventListener("click", () => {
-      lienzo.innerHTML = `<img src="${b._src || src}" alt="${w.marca} ${w.modelo} · ${T(es, en)}">`;
+      lienzo.innerHTML = esVideo
+        ? `<video src="${src}" autoplay muted loop playsinline class="lienzo__video"></video>`
+        : `<img src="${b._src || src}" alt="${w.marca} ${w.modelo} · ${T(es, en)}">`;
       vistasEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
     });
     vistasEl.append(b);
@@ -1173,6 +1186,17 @@ vid.addEventListener("loadeddata", () => document.getElementById("inicio").class
 if (vid.readyState >= 2) document.getElementById("inicio").classList.add("con-video");
 vid.querySelectorAll("source")[1].addEventListener("error", sinVideo);
 if (quieto) { vid.removeAttribute("autoplay"); vid.pause(); }
+
+/* ---------- Videos: cargan al acercarse, se reproducen solo en pantalla ---------- */
+const vids = [...document.querySelectorAll("video.vvid")];
+const ioV = new IntersectionObserver((es) => es.forEach((e) => {
+  const v = e.target;
+  if (e.isIntersecting) {
+    if (!v.src) { v.src = v.dataset.src; v.addEventListener("loadeddata", () => v.classList.add("lista"), { once: true }); }
+    if (!quieto) v.play().catch(() => {});
+  } else v.pause();
+}), { rootMargin: "200px 0px" });
+vids.forEach((v) => ioV.observe(v));
 
 /* ---------- Arranque ---------- */
 aplicarIdioma();
