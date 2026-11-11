@@ -251,7 +251,43 @@ dialog::backdrop{background:rgba(4,4,6,.92);backdrop-filter:blur(6px)}
 .vistas button:focus-visible span{outline:1px solid var(--gold);outline-offset:3px}
 .ficha__vis{flex-direction:column}
 .ficha__vis .eti{margin-top:16px;white-space:nowrap;color:var(--muted)}
-.ficha__txt{padding:clamp(28px,6vh,70px) clamp(22px,4vw,64px);display:flex;flex-direction:column;border-left:1px solid var(--line);background:rgba(10,10,13,.6)}
+.ficha__txt{position:relative;overflow:hidden;isolation:isolate;padding:clamp(28px,6vh,70px) clamp(22px,4vw,64px);display:flex;flex-direction:column;border-left:1px solid var(--line);
+  background:radial-gradient(520px circle at var(--gx,80%) var(--gy,10%),rgba(201,169,106,.14),transparent 60%),linear-gradient(180deg,#0e0d0c,#08080a)}
+/* filo dorado que recorre el borde izquierdo */
+.ficha__txt::before{content:"";position:absolute;left:0;top:0;width:1px;height:40%;background:linear-gradient(transparent,var(--gold),transparent);animation:recorre 5s var(--ease-soft) infinite}
+@keyframes recorre{from{translate:0 -100%}to{translate:0 260%}}
+.ficha__agua{position:absolute;right:-.06em;bottom:-.12em;z-index:-1;font:200 clamp(7rem,14vw,15rem)/.8 var(--f-serif);letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(201,169,106,.13);white-space:nowrap;pointer-events:none}
+.ficha__ref{margin:0 0 26px;color:var(--muted);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+.destacados{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:8px}
+.dest{padding:16px 14px;border-radius:14px;background:linear-gradient(160deg,rgba(234,215,168,.08),rgba(234,215,168,.02));box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow var(--t-fast),transform var(--t-fast) var(--ease)}
+.dest:hover{box-shadow:inset 0 0 0 1px var(--line-2),0 0 30px rgba(201,169,106,.12);transform:translateY(-3px)}
+.dest svg{width:22px;height:22px;color:var(--gold)}
+.dest b{display:block;font-weight:300;font-size:clamp(17px,1.5vw,22px);margin:10px 0 4px;letter-spacing:-.01em}
+.dest small{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.ficha__compra{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.disponible{display:inline-flex;align-items:center;gap:8px;margin-bottom:34px;padding:8px 14px;border-radius:999px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#bfeccb;background:rgba(47,211,107,.08);box-shadow:inset 0 0 0 1px rgba(47,211,107,.25)}
+.disponible i{width:7px;height:7px;border-radius:50%;background:#2fd36b;animation:latido 2s ease-out infinite}
+.garantias{list-style:none;margin:30px 0 0;padding:22px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 26px}
+.garantias li{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--muted);letter-spacing:.04em}
+.garantias svg{width:18px;height:18px;color:var(--gold)}
+/* Entrada: cada bloque sube en su turno */
+@keyframes entra{from{opacity:0;translate:0 18px}}
+.ficha.entrando .ficha__txt>*:not(.ficha__agua):not(.ficha__top){animation:entra .7s var(--ease) both}
+.ficha.entrando #f-marca{animation-delay:.05s!important}.ficha.entrando #f-modelo{animation-delay:.12s!important}.ficha.entrando .ficha__ref{animation-delay:.18s!important}
+.ficha.entrando .destacados{animation-delay:.24s!important}.ficha.entrando .specs{animation-delay:.32s!important}.ficha.entrando .colores{animation-delay:.38s!important}
+.ficha.entrando .ficha__compra{animation-delay:.42s!important}.ficha.entrando .acciones{animation-delay:.5s!important}.ficha.entrando .garantias{animation-delay:.58s!important}
+.ficha.entrando .ficha__agua{animation:entraAgua 1.4s var(--ease) both}
+@keyframes entraAgua{from{opacity:0;translate:60px 0}}
+/* Lado del reloj: video ambiental, halo y pieza que flota */
+.ficha__vis{overflow:hidden;isolation:isolate}
+.ficha__amb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;opacity:0;filter:blur(18px) brightness(.45) saturate(1.1);scale:1.15;transition:opacity 1.2s var(--ease)}
+.ficha__amb.lista{opacity:1}
+.ficha__vis::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 50% 45%,transparent 20%,rgba(7,7,10,.75) 70%)}
+.ficha__halo{position:absolute;left:50%;top:44%;width:min(70%,480px);aspect-ratio:1;translate:-50% -50%;z-index:-1;border-radius:50%;
+  background:radial-gradient(circle,rgba(234,215,168,.28),rgba(201,169,106,.08) 45%,transparent 70%);animation:respira 5s var(--ease-soft) infinite}
+.ficha__vis .lienzo>img{animation:flotar 6s var(--ease-soft) infinite}
+.ficha.entrando .lienzo>*{animation:entraReloj 1s var(--ease) both,flotar 6s 1s var(--ease-soft) infinite}
+@keyframes entraReloj{from{opacity:0;transform:translateY(40px) scale(.9) rotate(-6deg);filter:blur(6px)}}
 .ficha__top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:auto}
 .ficha h3{font-size:clamp(2.4rem,4vw,3.8rem);margin:24px 0 8px}
 .specs{margin:30px 0;display:grid;border-top:1px solid var(--line)}
@@ -379,6 +415,10 @@ dialog.menu[open] li{opacity:1;translate:0 0}
   .pilar{border-right:0;margin-right:0;border-bottom:1px solid var(--line);padding-right:0}
   .ficha{grid-template-columns:1fr}
   .ficha__txt{border-left:0;border-top:1px solid var(--line)}
+  .destacados{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .dest{padding:12px 10px}
+  .dest b{font-size:15px}
+  .ficha__agua{font-size:6rem}
   .ficha__vis{padding:4vh 10vw}
   .ficha__vis .lienzo{width:min(70%,320px)}
   .menu__cuerpo{grid-template-columns:1fr}
@@ -512,7 +552,7 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 <!-- ============ Escenario: piezas que flotan ============ -->
 <section class="escenario" id="escenario" aria-label="Piezas destacadas">
   <div class="escena">
-    <div class="escena__fondo" style="--tono:#7a3f2c"></div>
+    <div class="escena__fondo" style="--tono:#7a3f2c"><video class="vvid" data-src="video/esc-everose.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
     <div class="escena__fondo" style="--tono:#1d3a6e"><video class="vvid" data-src="video/esc-royaloak.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
     <div class="escena__fondo" style="--tono:#1f6a3a"><video class="vvid" data-src="video/esc-verde.mp4" muted loop playsinline preload="none" aria-hidden="true"></video></div>
     <div class="escena__reloj" id="escena-reloj"></div>
@@ -671,12 +711,15 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 
 <dialog id="ficha" aria-labelledby="f-modelo">
   <div class="ficha">
-    <div class="ficha__vis">
+    <div class="ficha__vis" id="f-vis">
+      <video class="ficha__amb" id="f-amb" muted loop playsinline preload="none" aria-hidden="true"></video>
+      <span class="ficha__halo" aria-hidden="true"></span>
       <div class="lienzo" id="f-lienzo"></div>
       <div class="vistas" id="f-vistas"></div>
       <p class="eti" data-en="Drag to turn">Arrastra para girar</p>
     </div>
-    <div class="ficha__txt">
+    <div class="ficha__txt" id="f-txt">
+      <span class="ficha__agua" id="f-agua" aria-hidden="true"></span>
       <div class="ficha__top">
         <span class="eti" id="f-cuenta"></span>
         <div class="nav-ficha">
@@ -687,10 +730,20 @@ dialog.menu[open] li{opacity:1;translate:0 0}
       </div>
       <p class="eti" id="f-marca" style="margin-top:40px"></p>
       <h3 class="serif" id="f-modelo"></h3>
+      <p class="ficha__ref" id="f-ref"></p>
+      <div class="destacados" id="f-dest"></div>
       <dl class="specs" id="f-specs"></dl>
       <div class="colores" id="f-colores"></div>
-      <p class="precio"><small data-en="Price">Precio</small><span id="f-precio"></span></p>
-      <div class="acciones"><a class="btn" href="#contacto" data-cerrar data-en="Inquire about this piece">Consultar esta pieza</a></div>
+      <div class="ficha__compra">
+        <p class="precio"><small data-en="Price">Precio</small><span id="f-precio"></span></p>
+        <span class="disponible"><i></i><span data-en="Available">Disponible</span></span>
+      </div>
+      <div class="acciones"><a class="btn" href="#contacto" data-cerrar data-en="Inquire about this piece">Consultar esta pieza</a><a class="btn btn--linea" href="#cita" data-cerrar data-en="Book a viewing">Agendar cita</a></div>
+      <ul class="garantias">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span data-en="Verified piece">Pieza verificada</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg><span data-en="Private delivery">Entrega privada</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span data-en="Personal advice">Asesoría personal</span></li>
+      </ul>
     </div>
   </div>
 </dialog>
@@ -1011,9 +1064,25 @@ marcas.forEach((mc) => {
 const dlg = document.getElementById("ficha");
 const lienzo = document.getElementById("f-lienzo");
 let actual = 0, fichaVivo = false, giro = 0;
+const AMBIENTE = {"124245RBR":"esc-everose","276248RBR":"esc-everose","126613LB":"ficha-submariner","126613LN":"ficha-submariner","126610LV":"ficha-submariner","126680":"ficha-yachtmaster","RD#5":"hist-legado"};
+const fichaEl = document.querySelector(".ficha");
+const amb = document.getElementById("f-amb");
+amb.addEventListener("loadeddata", () => amb.classList.add("lista"));
+const contarPrecio = (p) => {
+  const el = document.getElementById("f-precio");
+  if (p == null || quieto) { el.textContent = precioTxt(p); return; }
+  const t0 = performance.now();
+  const paso = (t) => { const k = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = "USD " + Math.round(p * e).toLocaleString("en-US"); if (k < 1 && dlg.open) requestAnimationFrame(paso); };
+  requestAnimationFrame(paso);
+};
 function abrir(i) {
   actual = (i + RELOJES.length) % RELOJES.length;
   const w = RELOJES[actual];
+  const vAmb = "video/" + (AMBIENTE[w.ref] || "esc-verde") + ".mp4";
+  if (!amb.src.endsWith(vAmb)) { amb.classList.remove("lista"); amb.src = vAmb; }
+  if (!quieto) amb.play().catch(() => {});
+  fichaEl.classList.remove("entrando"); void fichaEl.offsetWidth; fichaEl.classList.add("entrando");
   lienzo.innerHTML = visual(w, true);
   fichaVivo = !w.img; giro = 0;
   const coloresEl = document.getElementById("f-colores");
@@ -1052,7 +1121,14 @@ function abrir(i) {
   });
   if (!dlg.open) dlg.showModal();
   pintarDinamico();
+  contarPrecio(w.precio);
 }
+dlg.addEventListener("close", () => amb.pause());
+document.getElementById("f-txt").addEventListener("pointermove", (e) => {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--gx", (e.clientX - r.left) + "px");
+  e.currentTarget.style.setProperty("--gy", (e.clientY - r.top) + "px");
+}, { passive: true });
 const mover = (d) => abrir(actual + d);
 dlg.addEventListener("click", (e) => {
   if (e.target.closest("[data-cerrar]")) dlg.close();
@@ -1102,6 +1178,15 @@ function pintarDinamico() {
       [T("Estado", "Condition"), w.estado[LANG]],
     ];
     document.getElementById("f-specs").innerHTML = filas.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+    document.getElementById("f-ref").textContent = (w.ref && w.ref !== "—") ? "Ref. " + w.ref : T("Referencia por confirmar", "Reference to be confirmed");
+    document.getElementById("f-agua").textContent = w.marca.split(" ")[0];
+    const tam = (w.caja || "").split("·")[0].trim();
+    const movi = (w.mov || "").split("·")[0].trim();
+    document.getElementById("f-dest").innerHTML = [
+      [`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="6.5"/><path d="M9 5.5 9.6 2h4.8l.6 3.5M9 18.5l.6 3.5h4.8l.6-3.5M18.5 11h2v2h-2"/></svg>`, tam, T("Caja", "Case")],
+      [`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg>`, w.hermet, T("Hermeticidad", "Water res.")],
+      [`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9 7 7M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>`, LANG === "en" ? movi.replace("Automático", "Automatic").replace("Cuerda manual", "Manual") : movi, T("Movimiento", "Movement")],
+    ].map(([ic, v, k]) => `<div class="dest">${ic}<b>${v}</b><small>${k}</small></div>`).join("");
   }
 }
 
