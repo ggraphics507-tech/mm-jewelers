@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MM Jewelers · Alta relojería</title>
+<meta name="description" content="MM Jewelers: catálogo privado de alta relojería. Rolex y Audemars Piguet.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIRECCIÓN · MM JEWELERS
+   Frase: «La luz encuentra la pieza.» Todo está en penumbra; lo que
+   importa se ILUMINA. Nada salta ni rebota: el movimiento es lento,
+   como el de un vendedor que saca un reloj de la vitrina.
+   Verbos: ILUMINAR (la pieza se enciende), GIRAR (la pieza se vuelve
+   hacia ti), DESTELLAR (un reflejo cruza el cristal). Nada más.
+   El oro PINTA y ESCRIBE sobre negro (9:1); se usa con mesura.
+   Zonas quietas: textos, ficha técnica, contacto.
+   ============================================================ */
+:root{
+  --bg:#07070a;
+  --bg-2:#0d0d11;
+  --panel:#111116;
+  --text:#f3efe6;
+  --muted:#9d978b;           /* 7.3:1 sobre --bg */
+  --gold:#c9a96a;            /* pinta y escribe sobre negro */
+  --gold-lit:#ead7a8;
+  --line:rgba(201,169,106,.22);
+  --line-2:rgba(201,169,106,.45);
+
+  /* Una sola familia: limpia y ligera. El lujo lo ponen el aire y el oro, no los adornos. */
+  --f-serif:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-sans:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  /* Lujo = lento. Cuatro duraciones y dos curvas para todo el sitio. */
+  --t-tap:.2s; --t-fast:.4s; --t-mid:.8s; --t-slow:1.4s;
+  --ease:cubic-bezier(.22,.61,.24,1);
+  --ease-soft:cubic-bezier(.45,0,.2,1);
+
+  --shell:1280px;
+  --pad:clamp(18px,5vw,72px);
+  --step:clamp(88px,11vw,170px);
+  --bar:72px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--bar);-webkit-text-size-adjust:100%}
+/* 🐛 En móvil, el haz de luz y el reloj girado del escenario ensanchaban la página a ~400 px.
+   overflow-x:hidden en body no basta en iOS/Android; clip en ambos sí. */
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--text);font:300 16px/1.7 var(--f-sans);letter-spacing:.01em}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+.shell{max-width:var(--shell);margin:0 auto;padding:0 var(--pad)}
+.eti{font:500 11px/1 var(--f-sans);letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+.serif{font-family:var(--f-serif);font-weight:200;letter-spacing:-.03em;line-height:1.02;margin:0}
+.serif em{font-style:normal;color:var(--gold-lit)}
+.regla{display:block;width:56px;height:1px;background:var(--gold);margin:22px 0}
+
+/* ---------- Ambiente: terciopelo, polvo de oro, un haz de luz ---------- */
+.ambiente{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 70% 20%,#1a1712 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 10% 90%,#120f0a 0%,transparent 60%),var(--bg)}
+.haz{position:absolute;top:-40vh;left:55%;width:40vw;height:180vh;rotate:24deg;
+  background:linear-gradient(90deg,transparent,rgba(234,215,168,.06),transparent);animation:haz 16s var(--ease-soft) infinite alternate}
+@keyframes haz{to{translate:-30vw 0}}
+.polvo{position:absolute;bottom:-10px;left:var(--x);width:var(--t);height:var(--t);border-radius:50%;
+  background:var(--gold-lit);box-shadow:0 0 8px rgba(234,215,168,.8);opacity:0;animation:polvo var(--d) linear infinite;animation-delay:var(--r)}
+@keyframes polvo{10%{opacity:.7}50%{opacity:.25}90%{opacity:.6}to{transform:translate(var(--w),-110vh);opacity:0}}
+
+/* ---------- Barra ---------- */
+.bar{position:fixed;inset:0 0 auto;height:var(--bar);z-index:20;display:flex;align-items:center;
+  background:linear-gradient(rgba(7,7,10,.85),rgba(7,7,10,.55));backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color var(--t-fast)}
+.bar.con-filo{border-bottom-color:var(--line)}
+.bar .shell{display:flex;align-items:center;gap:28px;width:100%}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo__mm{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--gold);border-radius:50%;
+  font:400 14px/1 var(--f-serif);letter-spacing:.04em;color:var(--gold-lit)}
+.logo__txt{font:500 13px/1.1 var(--f-sans);letter-spacing:.38em;text-transform:uppercase}
+.logo__txt small{display:block;font-size:9px;letter-spacing:.42em;color:var(--gold);margin-top:5px}
+.bar .idioma{margin-left:4px}
+.bar nav a{font:400 12px/1 var(--f-sans);letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--muted);padding:16px 12px;transition:color var(--t-fast)}
+.bar nav a:hover{color:var(--gold-lit)}
+.idioma{display:flex;border:1px solid var(--line-2);border-radius:999px;padding:3px}
+.idioma button{all:unset;cursor:pointer;min-width:38px;min-height:32px;display:grid;place-items:center;border-radius:999px;
+  font:500 11px/1 var(--f-sans);letter-spacing:.18em;color:var(--muted);transition:background var(--t-fast),color var(--t-fast)}
+.idioma button[aria-pressed="true"]{background:var(--gold);color:#0a0a0a}
+.idioma button:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
+
+/* ---------- Botones: oro cepillado con luz ---------- */
+.btn{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:0 34px;
+  border-radius:999px;border:0;cursor:pointer;text-decoration:none;font:500 12px/1 var(--f-sans);letter-spacing:.28em;text-transform:uppercase;color:#120e06;
+  background:linear-gradient(180deg,#f3e3b8 0%,var(--gold) 52%,#9c7d43 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 30px rgba(201,169,106,.25),0 0 0 1px rgba(255,240,200,.25);
+  transition:transform var(--t-tap) var(--ease),box-shadow var(--t-fast) var(--ease)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%) -160% 0/250% 100% no-repeat;animation:destello 5s var(--ease-soft) infinite}
+@keyframes destello{0%,65%{background-position:-160% 0}100%{background-position:160% 0}}
+.btn:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 16px 40px rgba(201,169,106,.38),0 0 0 1px rgba(255,240,200,.35)}
+.btn:active{transform:translateY(1px)}
+.btn--linea{color:var(--gold-lit);background:transparent;box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn--linea::after{display:none}
+.btn--linea:hover{box-shadow:inset 0 0 0 1px var(--gold),0 0 30px rgba(201,169,106,.15)}
+.acciones{display:flex;flex-wrap:wrap;gap:14px}
+
+/* ---------- Portada ---------- */
+.hero{min-height:100svh;padding:calc(var(--bar) + 30px) 0 50px;display:flex;align-items:center;position:relative}
+.hero .shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:center;width:100%}
+.hero h1{font-size:clamp(3.4rem,7.2vw,7.4rem)}
+.hero p{max-width:40ch;color:var(--muted);font-size:clamp(16px,1.25vw,18px);margin:0 0 38px}
+.hero__reloj{position:relative;justify-self:center;width:min(100%,520px);aspect-ratio:1}
+.hero__reloj::before{content:"";position:absolute;inset:8%;border-radius:50%;
+  background:radial-gradient(circle,rgba(234,215,168,.22),rgba(201,169,106,.06) 45%,transparent 70%);filter:blur(10px);animation:respira 6s var(--ease-soft) infinite}
+.hero__reloj .aro{position:absolute;inset:2%;border-radius:50%;border:1px solid var(--line);}
+.hero__reloj .aro::after{content:"";position:absolute;inset:-1px;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 80%,var(--gold-lit) 92%,transparent);
+  -webkit-mask:radial-gradient(closest-side,transparent calc(100% - 2px),#000 calc(100% - 1px));mask:radial-gradient(closest-side,transparent calc(100% - 2px),#000 calc(100% - 1px));
+  animation:girar 12s linear infinite}
+.hero__reloj .aro--2{inset:12%;border-style:dashed;opacity:.5}
+.hero__reloj .aro--2::after{display:none}
+@keyframes girar{to{rotate:1turn}}
+@keyframes respira{50%{opacity:.6;scale:.94}}
+.hero__reloj svg{position:absolute;inset:6% 18%;width:64%;height:88%;filter:drop-shadow(0 40px 50px rgba(0,0,0,.7))}
+.hero__hora{position:absolute;left:50%;bottom:-6px;translate:-50% 0;white-space:nowrap}
+.scroll{position:absolute;left:var(--pad);bottom:24px}
+
+/* ---------- Marcas (cinta lenta) ---------- */
+.marcas{border-block:1px solid var(--line);overflow:hidden;padding:26px 0}
+.marcas__pista{display:flex;width:max-content;animation:correr 60s linear infinite}
+.marcas span{font:200 clamp(26px,2.6vw,38px)/1 var(--f-serif);color:var(--gold-lit);padding:0 44px;white-space:nowrap}
+.marcas span::after{content:"✦";font-style:normal;font-size:.45em;color:var(--gold);margin-left:88px;vertical-align:middle}
+@keyframes correr{to{translate:-50% 0}}
+
+/* ---------- Secciones ---------- */
+section{padding:var(--step) 0;position:relative}
+.cabecera{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 60px;margin-bottom:clamp(40px,5vw,72px)}
+.cabecera h2{font-size:clamp(2.8rem,5.6vw,5.4rem)}
+.cabecera p{max-width:44ch;color:var(--muted);margin:0}
+.revelar{opacity:0;translate:0 24px;transition:opacity var(--t-slow) var(--ease),translate var(--t-slow) var(--ease)}
+.revelar.dentro{opacity:1;translate:0 0}
+
+/* ---------- La Vitrina ----------
+   ILUMINAR + GIRAR: el estuche activo se enciende, el reloj gira hacia
+   ti y un destello cruza el cristal. Los demás quedan en penumbra. */
+.vitrina{overflow:hidden}
+.mostrador{position:relative;padding:10px 0 0}
+.mostrador::after{content:"";display:block;height:14px;margin:0 var(--pad);border-radius:0 0 8px 8px;
+  background:linear-gradient(#2a2318,#0c0a07);box-shadow:0 20px 40px rgba(0,0,0,.6),inset 0 1px 0 rgba(234,215,168,.25)}
+.estuches{list-style:none;margin:0;padding:0 var(--pad);display:flex;justify-content:center;gap:clamp(10px,1.4vw,22px)}
+.estuche{flex:1 1 0;max-width:180px;min-width:0;perspective:900px;position:relative}
+.estuche button{all:unset;display:block;cursor:pointer;width:100%}
+.estuche button:focus-visible{outline:1px solid var(--gold);outline-offset:6px}
+.cristal{position:relative;aspect-ratio:3/4.6;border-radius:6px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015) 40%,rgba(0,0,0,.3)),#0b0b0e;
+  box-shadow:inset 0 0 0 1px rgba(234,215,168,.16),inset 0 30px 40px -20px rgba(255,255,255,.06);transition:box-shadow var(--t-mid) var(--ease)}
+/* foco de joyería desde arriba */
+.cristal::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(255,244,214,.35),transparent 70%);opacity:0;transition:opacity var(--t-mid) var(--ease)}
+/* destello que cruza el cristal */
+.cristal::after{content:"";position:absolute;inset:-20% -60%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.18) 50%,transparent 58%);translate:-60% 0;transition:translate 0s}
+.cojin{position:absolute;left:12%;right:12%;bottom:9%;height:14%;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 30%,#3a2f22,#14100b 70%);box-shadow:inset 0 2px 6px rgba(234,215,168,.15)}
+.pieza{position:absolute;left:14%;right:14%;top:8%;bottom:15%;display:grid;place-items:center;
+  transform:rotateY(32deg) scale(.9);filter:brightness(.42) saturate(.6);transform-style:preserve-3d;
+  transition:transform var(--t-slow) var(--ease),filter var(--t-mid) var(--ease)}
+.pieza svg,.pieza img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.65))}
+.placa{margin-top:14px;text-align:center;font:500 10px/1.3 var(--f-sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);transition:color var(--t-fast)}
+.estuche.activa .cristal{box-shadow:inset 0 0 0 1px rgba(234,215,168,.55),inset 0 30px 40px -20px rgba(255,255,255,.12),0 0 60px rgba(201,169,106,.18)}
+.estuche.activa .cristal::before{opacity:1}
+.estuche.activa .cristal::after{translate:60% 0;transition:translate 1.6s var(--ease)}
+.estuche.activa .pieza{transform:rotateY(0) translateZ(40px) scale(1.08);filter:none}
+.estuche.activa .placa{color:var(--gold-lit)}
+.vit-info{display:grid;grid-template-columns:1fr auto;gap:10px 40px;align-items:end;margin-top:clamp(40px,5vw,64px);padding-top:28px;border-top:1px solid var(--line)}
+.vit-info h3{font-size:clamp(2rem,3.6vw,3.4rem)}
+.vit-info .ref{color:var(--muted);font-size:14px;margin-top:10px}
+.precio{font:300 clamp(1.8rem,3vw,2.8rem)/1 var(--f-serif);color:var(--gold-lit);text-align:right}
+.precio small{display:block;font:500 10px/1 var(--f-sans);letter-spacing:.3em;color:var(--muted);margin-bottom:10px}
+
+/* ---------- Pilares ---------- */
+.pilares{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line)}
+.pilar{padding:40px 36px 10px 0;border-right:1px solid var(--line);margin-right:36px}
+.pilar:last-child{border-right:0;margin-right:0}
+.pilar .num{font:200 54px/1 var(--f-serif);color:var(--gold)}
+.pilar h3{font:400 clamp(1.6rem,2.2vw,2rem)/1.1 var(--f-serif);margin:18px 0 12px}
+.pilar p{color:var(--muted);margin:0;max-width:34ch}
+
+/* ---------- Catálogo ---------- */
+.filtros{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.filtros button{all:unset;cursor:pointer;min-height:42px;padding:0 20px;border-radius:999px;display:inline-flex;align-items:center;
+  font:500 11px/1 var(--f-sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);transition:all var(--t-fast)}
+.filtros button:hover{color:var(--gold-lit);box-shadow:inset 0 0 0 1px var(--line-2)}
+.filtros button[aria-pressed="true"]{color:#120e06;background:linear-gradient(180deg,#f3e3b8,var(--gold));box-shadow:none}
+.filtros button:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:clamp(14px,1.8vw,24px)}
+.carta{position:relative;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#121217,#0a0a0d);box-shadow:inset 0 0 0 1px rgba(234,215,168,.1);
+  transition:box-shadow var(--t-mid) var(--ease),transform var(--t-mid) var(--ease)}
+.carta[hidden]{display:none}
+.carta button{all:unset;position:absolute;inset:0;z-index:2;cursor:pointer}
+.carta button:focus-visible{outline:1px solid var(--gold);outline-offset:-4px}
+.carta__vis{aspect-ratio:1;display:grid;place-items:center;padding:12% 22%;position:relative}
+.carta__vis::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(234,215,168,.12),transparent 60%);opacity:.5;transition:opacity var(--t-mid)}
+.carta__vis svg,.carta__vis img{width:100%;height:100%;object-fit:contain;transition:transform var(--t-slow) var(--ease);filter:drop-shadow(0 16px 18px rgba(0,0,0,.6))}
+.carta__txt{padding:18px 22px 22px;border-top:1px solid rgba(234,215,168,.08)}
+.carta__txt .eti{font-size:10px}
+.carta__txt h3{font:400 24px/1.1 var(--f-serif);margin:10px 0 6px}
+.carta__txt .p{display:flex;justify-content:space-between;align-items:baseline;gap:10px;color:var(--muted);font-size:13px}
+.carta__txt .p b{font:400 20px/1 var(--f-serif);color:var(--gold-lit)}
+@media (hover:hover){
+  .carta:hover{transform:translateY(-6px);box-shadow:inset 0 0 0 1px rgba(234,215,168,.45),0 30px 60px rgba(0,0,0,.5),0 0 50px rgba(201,169,106,.12)}
+  .carta:hover .carta__vis::before{opacity:1}
+  .carta:hover .carta__vis svg,.carta:hover .carta__vis img{transform:scale(1.06) rotate(-3deg)}
+}
+
+/* ---------- Próximamente: siluetas veladas ---------- */
+.pronto__fila{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,26px)}
+.velo{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 40%,rgba(234,215,168,.08),transparent 60%),#0c0c10;box-shadow:inset 0 0 0 1px var(--line)}
+.velo__pieza{width:46%;filter:blur(14px) brightness(.55) saturate(.4);opacity:.85;animation:respira 5s var(--ease-soft) infinite}
+.velo__pieza svg{width:100%;height:auto}
+.velo::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(234,215,168,.08) 50%,transparent 60%) -160% 0/250% 100% no-repeat;animation:destello 6s var(--ease-soft) infinite}
+.velo__txt{position:absolute;left:0;right:0;bottom:0;padding:22px;text-align:center;border-top:1px solid var(--line);background:linear-gradient(transparent,rgba(7,7,10,.9))}
+.velo__txt b{display:block;font-weight:300;font-size:20px;letter-spacing:.02em;margin-top:8px}
+.carta--pronto{display:grid;place-items:center;text-align:center;padding:30px;min-height:100%;border:1px dashed var(--line-2);background:transparent;box-shadow:none}
+.carta--pronto p{margin:10px 0 0;color:var(--muted);font-size:14px}
+
+/* ---------- Cita privada ---------- */
+.cita{text-align:center;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(201,169,106,.10),transparent 70%)}
+.cita h2{font-size:clamp(2.8rem,6vw,6rem);max-width:16ch;margin:0 auto}
+.cita p{color:var(--muted);max-width:52ch;margin:26px auto 40px}
+.cita .acciones{justify-content:center}
+
+/* ---------- Contacto: solo redes (propuesta) ---------- */
+.contacto{border-top:1px solid var(--line);text-align:center}
+.contacto h2{font-size:clamp(2.4rem,4.6vw,4.2rem)}
+.redes{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;margin-top:40px}
+.red{display:grid;justify-items:center;gap:12px;text-decoration:none;color:var(--muted);font:500 10px/1 var(--f-sans);letter-spacing:.26em;text-transform:uppercase;transition:color var(--t-fast)}
+.red span{display:grid;place-items:center;width:68px;height:68px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-2);
+  transition:box-shadow var(--t-fast),background var(--t-fast),transform var(--t-fast) var(--ease)}
+.red svg{width:24px;height:24px;color:var(--gold-lit)}
+.red:hover{color:var(--gold-lit)}
+.red:hover span{box-shadow:inset 0 0 0 1px var(--gold),0 0 30px rgba(201,169,106,.25);background:rgba(201,169,106,.08);transform:translateY(-3px)}
+footer{padding:30px 0 calc(30px + env(safe-area-inset-bottom));border-top:1px solid var(--line);color:var(--muted);font-size:12px;letter-spacing:.08em}
+footer .shell{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* ---------- Ficha (diálogo) ---------- */
+dialog{border:0;padding:0;margin:0;width:100%;height:100%;max-width:none;max-height:none;background:transparent;color:var(--text)}
+dialog::backdrop{background:rgba(4,4,6,.92);backdrop-filter:blur(6px)}
+.ficha{height:100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);overflow:auto}
+.ficha__vis{position:relative;display:grid;place-items:center;padding:6vh 6vw;background:radial-gradient(circle at 50% 45%,rgba(234,215,168,.16),transparent 60%)}
+.ficha__vis .lienzo{width:min(100%,460px,calc(60svh * 2 / 3));aspect-ratio:2/3;display:grid;place-items:center;cursor:grab;touch-action:none}
+.ficha__vis .lienzo>*{width:100%;height:100%;object-fit:contain;transition:transform var(--t-mid) var(--ease);filter:drop-shadow(0 40px 50px rgba(0,0,0,.7))}
+.vistas{display:flex;gap:10px;margin-top:18px}
+.vistas button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:6px;font:500 9px/1 var(--f-sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.vistas button span{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow var(--t-fast),background var(--t-fast)}
+.vistas button img{width:70%;height:70%;object-fit:contain}
+.vistas button[aria-pressed="true"]{color:var(--gold-lit)}
+.vistas button[aria-pressed="true"] span{box-shadow:inset 0 0 0 1px var(--gold);background:rgba(201,169,106,.08)}
+.vistas button:focus-visible span{outline:1px solid var(--gold);outline-offset:3px}
+.ficha__vis{flex-direction:column}
+.ficha__vis .eti{margin-top:16px;white-space:nowrap;color:var(--muted)}
+.ficha__txt{padding:clamp(28px,6vh,70px) clamp(22px,4vw,64px);display:flex;flex-direction:column;border-left:1px solid var(--line);background:rgba(10,10,13,.6)}
+.ficha__top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:auto}
+.ficha h3{font-size:clamp(2.4rem,4vw,3.8rem);margin:24px 0 8px}
+.specs{margin:30px 0;display:grid;border-top:1px solid var(--line)}
+.specs div{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+.specs dt{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-size:11px;font-weight:500}
+.specs dd{margin:0;text-align:right}
+.ficha .precio{text-align:left;margin:6px 0 30px}
+.colores{margin:-6px 0 28px}
+.colores:empty{display:none}
+.colores p{margin:0 0 12px}
+.colores__fila{display:flex;flex-wrap:wrap;gap:12px}
+.colores button{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),0 0 0 1px var(--line);transition:box-shadow var(--t-fast),transform var(--t-fast) var(--ease)}
+.colores button:hover{transform:scale(1.1)}
+.colores button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #0a0a0a,0 0 0 2px var(--gold),0 0 18px rgba(201,169,106,.4)}
+.colores button:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+.redondo{all:unset;cursor:pointer;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--gold-lit);font-size:18px;transition:box-shadow var(--t-fast)}
+.redondo:hover{box-shadow:inset 0 0 0 1px var(--gold)}
+.redondo:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+.nav-ficha{display:flex;gap:10px}
+
+
+/* ---------- Video de portada ---------- */
+.hero__video{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.hero__video video{width:100%;height:100%;object-fit:cover;opacity:.55;transition:opacity var(--t-slow) var(--ease)}
+/* Con video, el video ES la pieza: el reloj dibujado se retira y el video sube. */
+.hero.con-video .hero__reloj{display:none}
+.hero.con-video .hero__video video{opacity:.9}
+.hero.con-video .shell{grid-template-columns:minmax(0,1fr) minmax(0,.6fr)}
+.hero__video::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,7,10,.92) 0%,rgba(7,7,10,.55) 55%,rgba(7,7,10,.35)),linear-gradient(transparent 60%,var(--bg))}
+
+/* ---------- Menú completo ---------- */
+.menu-btn{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;min-height:44px;padding:0 6px;font:500 11px/1 var(--f-sans);letter-spacing:.3em;text-transform:uppercase;color:var(--text)}
+.menu-btn i{display:grid;gap:5px;width:24px}
+.menu-btn i::before,.menu-btn i::after{content:"";height:1px;background:var(--gold-lit);transition:width var(--t-fast) var(--ease)}
+.menu-btn i::after{width:65%}
+.menu-btn:hover i::after{width:100%}
+.menu-btn:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+dialog.menu{background:radial-gradient(ellipse 60% 70% at 80% 40%,rgba(201,169,106,.12),transparent 60%),rgba(7,7,10,.97)}
+dialog.menu::backdrop{background:transparent}
+.menu__in{height:100%;display:grid;grid-template-rows:var(--bar) 1fr auto;overflow:auto}
+.menu__top{display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad)}
+.menu__cuerpo{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px;align-items:center;padding:4vh var(--pad)}
+.menu ol{list-style:none;margin:0;padding:0;counter-reset:m}
+.menu li{counter-increment:m;opacity:0;translate:0 24px;transition:opacity var(--t-mid) var(--ease),translate var(--t-mid) var(--ease);transition-delay:calc(var(--k) * 70ms + 120ms)}
+dialog.menu[open] li{opacity:1;translate:0 0}
+.menu ol a{display:flex;align-items:baseline;gap:22px;text-decoration:none;padding:8px 0;font:300 clamp(2.4rem,5.4vw,5rem)/1.05 var(--f-serif);color:var(--text);transition:color var(--t-fast),padding var(--t-fast) var(--ease)}
+.menu ol a::before{content:"0" counter(m);font:500 11px/1 var(--f-sans);letter-spacing:.3em;color:var(--gold)}
+.menu ol a:hover{color:var(--gold-lit);padding-left:14px}
+.menu ol a:hover em{color:var(--gold)}
+.menu__vis{position:relative;display:grid;place-items:center;height:min(60vh,520px)}
+.menu__vis .flota{width:min(70%,260px)}
+.menu__pie{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding:24px var(--pad) calc(24px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.menu__pie .redes{margin:0;gap:12px}
+.menu__pie .red span{width:48px;height:48px}
+.menu__pie .red svg{width:19px;height:19px}
+
+/* ---------- Escríbenos: siempre a la vista ---------- */
+.escribe{position:fixed;right:22px;bottom:calc(22px + env(safe-area-inset-bottom));z-index:30;min-height:56px;padding:0 26px 0 20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 34px rgba(0,0,0,.55),0 0 0 1px rgba(255,240,200,.3),0 0 40px rgba(201,169,106,.3)}
+.escribe svg{width:22px;height:22px}
+.escribe .punto{position:absolute;top:10px;right:12px;width:8px;height:8px;border-radius:50%;background:#2fd36b;box-shadow:0 0 0 0 rgba(47,211,107,.6);animation:latido 2s ease-out infinite}
+@keyframes latido{to{box-shadow:0 0 0 10px rgba(47,211,107,0)}}
+
+/* ---------- Flotar (compartido) ---------- */
+.flota{position:relative;display:grid;place-items:center}
+.flota__bob{width:100%;animation:flotar 6s var(--ease-soft) infinite}
+.flota__bob>*{width:100%;height:auto;filter:drop-shadow(0 30px 30px rgba(0,0,0,.55))}
+.flota__sombra{width:60%;height:18px;margin-top:4%;border-radius:50%;background:radial-gradient(rgba(0,0,0,.75),transparent 70%);animation:sombra 6s var(--ease-soft) infinite}
+@keyframes flotar{50%{translate:0 -16px;rotate:-1.5deg}}
+@keyframes sombra{50%{scale:.78;opacity:.55}}
+
+/* ---------- Escenario: el reloj flota mientras bajas ---------- */
+.escenario{height:360vh;padding:0}
+.escena{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center}
+.escena__fondo{position:absolute;inset:0;opacity:0;transition:opacity var(--t-slow) var(--ease);
+  background:radial-gradient(circle at 34% 52%,var(--tono) 0%,color-mix(in oklab,var(--tono) 35%,transparent) 32%,transparent 62%)}
+.escena__fondo.on{opacity:.75}
+.escena__reloj{position:relative;height:100%;display:grid;place-items:center;rotate:var(--giro,0deg);scale:var(--zoom,1);transition:rotate .3s linear}
+.escena__reloj .flota{position:absolute;width:min(46%,340px);opacity:0;transform:translateY(60px) rotate(-14deg) scale(.86);filter:blur(6px);
+  transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease),filter var(--t-slow) var(--ease)}
+.escena__reloj .flota.on{opacity:1;transform:none;filter:none}
+.escena__txt{position:relative;padding-right:var(--pad);min-height:340px}
+.escena__txt article{position:absolute;inset:0 var(--pad) 0 0;display:flex;flex-direction:column;justify-content:center;opacity:0;translate:0 30px;pointer-events:none;
+  transition:opacity var(--t-mid) var(--ease),translate var(--t-mid) var(--ease)}
+.escena__txt article.on{opacity:1;translate:0 0;pointer-events:auto;transition-delay:.2s}
+.escena__txt h2{font-size:clamp(2.6rem,4.8vw,4.6rem)}
+.escena__txt p{color:var(--muted);max-width:40ch;margin:22px 0 30px}
+.escena__txt .btn{align-self:flex-start}
+.escena__puntos{position:absolute;left:var(--pad);bottom:40px;display:flex;gap:10px}
+.escena__puntos i{width:28px;height:1px;background:var(--line-2);transition:background var(--t-fast),width var(--t-fast)}
+.escena__puntos i.on{background:var(--gold);width:56px}
+
+/* ---------- Historias: tarjetas que se apilan ---------- */
+.historias{padding-bottom:calc(var(--step) * .6)}
+.pila{padding:0 var(--pad);max-width:calc(var(--shell) + 40px);margin:0 auto}
+.hist{position:sticky;top:calc(var(--bar) + 22px + var(--i) * 18px);height:min(76svh,660px);margin-bottom:10vh;border-radius:22px;overflow:hidden;
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);background:#0e0e12;
+  box-shadow:0 -20px 60px rgba(0,0,0,.6),inset 0 0 0 1px rgba(234,215,168,.14);
+  transform-origin:50% 0;transform:scale(var(--s,1));filter:brightness(var(--b,1));will-change:transform}
+.hist:last-child{margin-bottom:0}
+.hist__vis{position:relative;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 55%,color-mix(in oklab,var(--c) 70%,#fff 8%),var(--c) 35%,#050506 85%)}
+.hist__vis>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hist__vis .flota{width:min(44%,240px)}
+.hist__vis .marca-agua{position:absolute;left:6%;bottom:4%;font:200 clamp(5rem,12vw,11rem)/.8 var(--f-serif);color:rgba(255,255,255,.06);pointer-events:none}
+.hist__txt{display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4vw,64px)}
+.hist__txt h3{font-size:clamp(2.4rem,4.2vw,4.2rem)}
+.hist__txt p{color:var(--muted);max-width:36ch;margin:22px 0 30px}
+.hist__txt .btn{align-self:flex-start}
+
+/* ---------- Responsive ---------- */
+@media (max-width:980px){
+  .hero .shell{grid-template-columns:1fr}
+  .hero__reloj{width:min(100%,420px);order:-1}
+  .hero.con-video .shell{grid-template-columns:1fr}
+  .pilares{grid-template-columns:1fr}
+  .pilar{border-right:0;margin-right:0;border-bottom:1px solid var(--line);padding-right:0}
+  .ficha{grid-template-columns:1fr}
+  .ficha__txt{border-left:0;border-top:1px solid var(--line)}
+  .ficha__vis{padding:4vh 10vw}
+  .ficha__vis .lienzo{width:min(70%,320px)}
+  .menu__cuerpo{grid-template-columns:1fr}
+  .menu__vis{display:none}
+  .escena{grid-template-columns:1fr;grid-template-rows:55% 45%}
+  .escena__reloj .flota{width:min(46%,240px)}
+  .escena__txt{padding:0;min-height:0;height:100%}
+  .escena__txt article{justify-content:flex-start;inset:0 var(--pad)}
+  .hero__hora{bottom:-34px}
+  .escena__puntos{bottom:auto;top:calc(var(--bar) + 12px)}
+  .hist{grid-template-columns:1fr;grid-template-rows:52% 48%}
+}
+@media (max-width:760px){
+  .logo__txt{display:none}
+  .menu-btn span{display:none}
+  .bar .shell{gap:12px}
+  .hero{padding-top:calc(var(--bar) + 6px)}
+  .hero h1{font-size:clamp(2.9rem,13vw,4.2rem)}
+  .scroll{display:none}
+  /* En el teléfono la vitrina se desliza: el estuche del centro es el que se ilumina */
+  .estuches{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 calc(50% - 26vw) 10px;gap:14px}
+  .estuches::-webkit-scrollbar{display:none}
+  .estuche{flex:0 0 52vw;max-width:none;scroll-snap-align:center}
+  .vit-info{grid-template-columns:1fr}
+  .precio{text-align:left}
+  .rejilla{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .pronto__fila{grid-template-columns:1fr 1fr}
+  .pronto__fila .velo:nth-child(3){display:none}
+  .velo__txt{padding:12px 10px}
+  .velo__txt b{font-size:14px;margin-top:5px}
+  .velo__txt .eti{font-size:9px;letter-spacing:.24em}
+  .velo__pieza{width:56%;margin-bottom:22%}
+  .carta__txt{padding:14px}
+  .carta__txt h3{font-size:19px}
+  .carta__txt .p{flex-direction:column;gap:6px}
+  .btn{padding:0 26px}
+  .escribe{right:14px;padding:0 20px 0 16px;min-height:52px}
+  .escribe .txt{display:none}
+  .escribe{width:56px;padding:0;border-radius:50%}
+  .escena__txt p{margin:14px 0 20px;font-size:15px}
+  .hist{height:72svh}
+  .hist__txt p{margin:12px 0 18px;font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .revelar{opacity:1;translate:none}
+}
+</style>
+</head>
+<body>
+<div class="ambiente" aria-hidden="true"><span class="haz"></span></div>
+
+<header class="bar" id="bar">
+  <div class="shell">
+    <a class="logo" href="#inicio" aria-label="MM Jewelers">
+      <span class="logo__mm">MM</span>
+      <span class="logo__txt">MM Jewelers<small data-en="Fine watches">Alta relojería</small></span>
+    </a>
+    <button class="menu-btn" type="button" id="abrir-menu" aria-haspopup="dialog" style="margin-left:auto"><i></i><span data-en="Menu">Menú</span></button>
+    <div class="idioma" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ============ Portada ============ -->
+<section class="hero" id="inicio">
+  <!-- VIDEO DE FONDO: guarda tu video como video/hero.mp4 (y opcional video/hero.webm). Si no existe, la portada se ve igual sin él. -->
+  <div class="hero__video" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata" id="video-hero">
+      <source src="video/hero.webm" type="video/webm">
+      <source src="video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="shell">
+    <div>
+      <p class="eti" data-en="MM Jewelers · Private catalog">MM Jewelers · Catálogo privado</p>
+      <span class="regla"></span>
+      <h1 class="serif" data-en-html="Time,<br><em>in its most<br>exquisite form.</em>">El tiempo,<br><em>en su forma<br>más exquisita.</em></h1>
+      <p style="margin-top:30px" data-en="Rolex and Audemars Piguet, selected one by one for those who don't settle for telling the time — they make it theirs.">Rolex y Audemars Piguet. Piezas seleccionadas una a una para quien no se conforma con saber la hora: la hace suya.</p>
+      <div class="acciones">
+        <a class="btn" href="#vitrina" data-en="Enter the showcase">Entrar a la vitrina</a>
+        <a class="btn btn--linea" href="#catalogo" data-en="Full catalog">Ver catálogo</a>
+      </div>
+    </div>
+    <div class="hero__reloj" aria-hidden="true">
+      <span class="aro"></span><span class="aro aro--2"></span>
+      <div id="reloj-hero"></div>
+      <p class="eti hero__hora" id="hora-hero"></p>
+    </div>
+  </div>
+  <p class="eti scroll" data-en="Scroll">Desliza</p>
+</section>
+
+<!-- ============ Marcas ============ -->
+<div class="marcas" aria-label="Marcas disponibles">
+  <div class="marcas__pista">
+    <span>Rolex</span><span>Audemars Piguet</span><span>Oyster Perpetual</span><span>Submariner</span><span>Royal Oak</span>
+    <span aria-hidden="true">Rolex</span><span aria-hidden="true">Audemars Piguet</span><span aria-hidden="true">Oyster Perpetual</span><span aria-hidden="true">Submariner</span><span aria-hidden="true">Royal Oak</span>
+  </div>
+</div>
+
+<!-- ============ La Vitrina ============ -->
+<section class="vitrina" id="vitrina" aria-labelledby="vit-t">
+  <div class="shell cabecera revelar">
+    <div>
+      <p class="eti" data-en="The showcase">La vitrina</p>
+      <h2 class="serif" id="vit-t" data-en-html="Pieces that<br><em>come to light.</em>">Piezas que<br><em>salen a la luz.</em></h2>
+    </div>
+    <p data-en="Move across the showcase: each piece lights up and turns toward you. Tap it to see it up close.">Recorre la vitrina: cada pieza se ilumina y gira hacia ti. Tócala para verla de cerca.</p>
+  </div>
+  <div class="mostrador">
+    <ul class="estuches" id="estuches"></ul>
+  </div>
+  <div class="shell">
+    <div class="vit-info" aria-live="polite">
+      <div>
+        <p class="eti" id="vit-marca"></p>
+        <h3 class="serif" id="vit-modelo"></h3>
+        <p class="ref" id="vit-ref"></p>
+      </div>
+      <p class="precio"><small data-en="Price">Precio</small><span id="vit-precio"></span></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ Escenario: piezas que flotan ============ -->
+<section class="escenario" id="escenario" aria-label="Piezas destacadas">
+  <div class="escena">
+    <div class="escena__fondo" style="--tono:#7a3f2c"></div>
+    <div class="escena__fondo" style="--tono:#1d3a6e"></div>
+    <div class="escena__fondo" style="--tono:#1f6a3a"></div>
+    <div class="escena__reloj" id="escena-reloj"></div>
+    <div class="escena__txt" id="escena-txt">
+      <article>
+        <p class="eti">Rolex · Oyster Perpetual 34</p>
+        <h2 class="serif" data-en-html="Everose gold,<br><em>set with diamonds.</em>">Oro Everose,<br><em>engastado en diamantes.</em></h2>
+        <p data-en="A chocolate dial, a diamond bezel and Rolex's own rose gold. Warmth you notice from across the room.">Esfera chocolate, bisel de diamantes y el oro rosa propio de Rolex. Una calidez que se nota desde el otro lado de la sala.</p>
+        <a class="btn btn--linea" href="#" data-ficha="124245RBR" data-en="View piece">Ver pieza</a>
+      </article>
+      <article>
+        <p class="eti">Audemars Piguet · Royal Oak RD#5</p>
+        <h2 class="serif" data-en-html="Steel<br><em>turned into jewelry.</em>">Acero<br><em>convertido en joya.</em></h2>
+        <p data-en="Ultra-thin, a flying tourbillon at six o'clock and a chronograph on a blue tapisserie dial. The Royal Oak at its most extreme.">Extraplano, con tourbillon volante a las seis y cronógrafo sobre esfera azul de tapicería. El Royal Oak en su versión más extrema.</p>
+        <a class="btn btn--linea" href="#" data-ficha="RD#5" data-en="View piece">Ver pieza</a>
+      </article>
+      <article>
+        <p class="eti">Rolex · Submariner Date</p>
+        <h2 class="serif" data-en-html="Born under water,<br><em>made to stand out.</em>">Nacido bajo el agua,<br><em>hecho para destacar.</em></h2>
+        <p data-en="The green bezel collectors look for, 300 metres of water resistance and a steel that lasts a lifetime.">El bisel verde que buscan los coleccionistas, 300 metros de hermeticidad y un acero que dura toda la vida.</p>
+        <a class="btn btn--linea" href="#" data-ficha="126610LV" data-en="View piece">Ver pieza</a>
+      </article>
+    </div>
+    <div class="escena__puntos" id="escena-puntos" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- ============ Historias: tarjetas que se apilan ============ -->
+<!-- FOTOS: en cada .hist__vis puedes poner <img src="img/historias/1.jpg" alt=""> y desaparece el reloj de muestra. -->
+<section class="historias" id="historias" aria-labelledby="his-t">
+  <div class="shell cabecera revelar">
+    <div>
+      <p class="eti" data-en="Stories">Historias</p>
+      <h2 class="serif" id="his-t" data-en-html="Every moment<br><em>has its watch.</em>">Cada momento<br><em>tiene su reloj.</em></h2>
+    </div>
+    <p data-en="A watch of this level isn't bought for telling the time. It's bought for what it says about you.">Un reloj de este nivel no se compra para saber la hora. Se compra por lo que dice de ti.</p>
+  </div>
+  <div class="pila" id="pila">
+    <article class="hist" style="--i:0"><div class="hist__vis" style="--c:#2b2d33"><span class="marca-agua">I</span><div class="flota" data-reloj="134303"></div></div>
+      <div class="hist__txt"><p class="eti">01</p><h3 class="serif" data-en-html="Time<br><em>and ambition</em>">El tiempo<br><em>y la ambición</em></h3><p data-en="For the meeting that changes everything. The watch that arrives before you do.">Para la reunión que lo cambia todo. El reloj que llega antes que tú.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
+    <article class="hist" style="--i:1"><div class="hist__vis" style="--c:#14284f"><span class="marca-agua">II</span><div class="flota" data-reloj="126613LB"></div></div>
+      <div class="hist__txt"><p class="eti">02</p><h3 class="serif" data-en-html="Time<br><em>and the sea</em>">El tiempo<br><em>y el mar</em></h3><p data-en="Built to go down deep and come back up untouched. Like the best weekends.">Hecho para bajar a lo profundo y volver intacto. Como los mejores fines de semana.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
+    <article class="hist" style="--i:2"><div class="hist__vis" style="--c:#1d5c66"><span class="marca-agua">III</span><div class="flota" data-reloj="276248RBR"></div></div>
+      <div class="hist__txt"><p class="eti">03</p><h3 class="serif" data-en-html="Time<br><em>and elegance</em>">El tiempo<br><em>y la elegancia</em></h3><p data-en="Yellow gold, a turquoise dial and a ring of diamonds. Elegance never needed to shout.">Oro amarillo, esfera turquesa y un aro de diamantes. La elegancia nunca necesitó gritar.</p><a class="btn btn--linea" href="#catalogo" data-en="Explore">Explorar</a></div></article>
+    <article class="hist" style="--i:3"><div class="hist__vis" style="--c:#16264a"><span class="marca-agua">IV</span><div class="flota" data-reloj="RD#5"></div></div>
+      <div class="hist__txt"><p class="eti">04</p><h3 class="serif" data-en-html="Time<br><em>and legacy</em>">El tiempo<br><em>y el legado</em></h3><p data-en="Some watches are worn. Others are handed down. These are of the second kind.">Hay relojes que se usan. Otros se heredan. Estos son de los segundos.</p><a class="btn btn--linea" href="#cita" data-en="Book a viewing">Agendar cita</a></div></article>
+  </div>
+</section>
+
+<!-- ============ Pilares ============ -->
+<section aria-labelledby="pil-t">
+  <div class="shell">
+    <div class="cabecera revelar">
+      <div>
+        <p class="eti" data-en="The MM experience">La experiencia MM</p>
+        <h2 class="serif" id="pil-t" data-en-html="More than a watch,<br><em>a decision.</em>">Más que un reloj,<br><em>una decisión.</em></h2>
+      </div>
+    </div>
+    <div class="pilares revelar">
+      <div class="pilar"><span class="num">I</span><h3 data-en="Verified pieces">Piezas verificadas</h3><p data-en="Every watch is reviewed before it reaches your wrist: references, condition and documentation.">Cada reloj se revisa antes de llegar a tu muñeca: referencias, estado y documentación.</p></div>
+      <div class="pilar"><span class="num">II</span><h3 data-en="Absolute discretion">Discreción absoluta</h3><p data-en="Private conversations, private viewings and delivery with the care each piece deserves.">Conversaciones privadas, citas privadas y entregas con el cuidado que merece cada pieza.</p></div>
+      <div class="pilar"><span class="num">III</span><h3 data-en="Personal advice">Asesoría personal</h3><p data-en="We help you find the reference you're looking for, or the one you didn't know you needed.">Te ayudamos a encontrar la referencia que buscas, o la que aún no sabías que necesitabas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Catálogo ============ -->
+<section id="catalogo" aria-labelledby="cat-t">
+  <div class="shell">
+    <div class="cabecera revelar">
+      <div>
+        <p class="eti" data-en="Catalog">Catálogo</p>
+        <h2 class="serif" id="cat-t" data-en-html="The full<br><em>collection.</em>">La colección<br><em>completa.</em></h2>
+      </div>
+      <p data-en="Filter by house and tap any piece to see its full specifications.">Filtra por casa relojera y toca cualquier pieza para ver su ficha completa.</p>
+    </div>
+    <div class="filtros" id="filtros" role="group" aria-label="Filtrar por marca"></div>
+    <div class="rejilla" id="rejilla"></div>
+  </div>
+</section>
+
+<!-- ============ Próximamente ============ -->
+<section class="pronto" id="pronto" aria-labelledby="pro-t">
+  <div class="shell">
+    <div class="cabecera revelar">
+      <div>
+        <p class="eti" data-en="Coming soon">Próximamente</p>
+        <h2 class="serif" id="pro-t" data-en-html="More pieces<br><em>are on their way.</em>">Vienen más<br><em>piezas en camino.</em></h2>
+      </div>
+      <p data-en="New references arrive every month. Message us and be the first to know — some pieces are reserved before they reach the showcase.">Cada mes llegan nuevas referencias. Escríbenos y entérate primero: algunas piezas se apartan antes de llegar a la vitrina.</p>
+    </div>
+    <div class="pronto__fila revelar" id="pronto-fila"></div>
+    <div class="acciones" style="justify-content:center;margin-top:44px"><a class="btn" href="#contacto" data-en="Notify me first">Avisarme primero</a></div>
+  </div>
+</section>
+
+<!-- ============ Cita privada ============ -->
+<section class="cita" id="cita" aria-labelledby="cita-t">
+  <div class="shell revelar">
+    <p class="eti" data-en="Private viewing">Cita privada</p>
+    <h2 class="serif" id="cita-t" data-en-html="Some pieces are <em>chosen in person.</em>">Hay piezas que <em>se eligen en persona.</em></h2>
+    <p data-en="Book a private viewing and try on the watch you've been looking for. No rush, no showroom, just you and the piece.">Agenda una cita privada y pruébate el reloj que llevas tiempo buscando. Sin prisas, sin vitrinas de por medio: solo tú y la pieza.</p>
+    <div class="acciones"><a class="btn" href="#contacto" data-en="Book a viewing">Agendar cita</a></div>
+  </div>
+</section>
+
+<!-- ============ Contacto ============ -->
+<section class="contacto" id="contacto" aria-labelledby="con-t">
+  <div class="shell revelar">
+    <p class="eti" data-en="Contact">Contacto</p>
+    <h2 class="serif" id="con-t" data-en-html="Let's talk about<br><em>your next piece.</em>">Hablemos de tu<br><em>próxima pieza.</em></h2>
+    <!-- PROPUESTA: los enlaces de redes están vacíos (#). Cámbialos por los reales. -->
+    <div class="redes" id="redes">
+      <a class="red" href="#" aria-label="Instagram"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".9" fill="currentColor"/></svg></span>Instagram</a>
+      <a class="red" href="#" aria-label="WhatsApp"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3Z"/></svg></span>WhatsApp</a>
+      <a class="red" href="#" aria-label="TikTok"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.3 1.9 3.8 4.2 4v3.1a7.6 7.6 0 0 1-4.1-1.3v6.4A5.8 5.8 0 1 1 10.8 9.4v3.2a2.7 2.7 0 1 0 2.7 2.7V3h3Z"/></svg></span>TikTok</a>
+      <a class="red" href="#" aria-label="Facebook"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.5-1 .9-1h2.3V2.1L14 2c-3.5 0-4.3 2.6-4.3 4.3v2.2H7.6v3.8h2.1V22H14v-9.7h2.9l.4-3.8H14Z"/></svg></span>Facebook</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="shell">
+    <span>© 2026 MM Jewelers</span>
+    <span data-en="Independent reseller. Brand names belong to their respective owners.">Revendedor independiente. Las marcas pertenecen a sus respectivos dueños.</span>
+  </div>
+</footer>
+
+
+<a class="btn escribe" href="#contacto" id="escribe" aria-label="Escríbenos"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3Z"/></svg><span class="txt" data-en="Message us">Escríbenos</span><span class="punto" aria-hidden="true"></span></a>
+
+<dialog class="menu" id="menu" aria-label="Menú">
+  <div class="menu__in">
+    <div class="menu__top">
+      <a class="logo" href="#inicio" data-cierra><span class="logo__mm">MM</span><span class="logo__txt">MM Jewelers<small data-en="Fine watches">Alta relojería</small></span></a>
+      <button class="redondo" type="button" data-cierra aria-label="Cerrar menú">✕</button>
+    </div>
+    <div class="menu__cuerpo">
+      <ol>
+        <li style="--k:0"><a href="#vitrina" data-cierra data-en-html="The <em>showcase</em>">La <em>vitrina</em></a></li>
+        <li style="--k:1"><a href="#escenario" data-cierra data-en-html="Featured <em>pieces</em>">Piezas <em>destacadas</em></a></li>
+        <li style="--k:2"><a href="#historias" data-cierra data-en-html="<em>Stories</em>"><em>Historias</em></a></li>
+        <li style="--k:3"><a href="#catalogo" data-cierra data-en-html="The <em>catalog</em>">El <em>catálogo</em></a></li>
+        <li style="--k:4"><a href="#cita" data-cierra data-en-html="Private <em>viewing</em>">Cita <em>privada</em></a></li>
+        <li style="--k:5"><a href="#contacto" data-cierra data-en-html="<em>Contact</em>"><em>Contacto</em></a></li>
+      </ol>
+      <div class="menu__vis"><div class="flota" data-reloj="134303"></div></div>
+    </div>
+    <div class="menu__pie">
+      <span class="eti" data-en="MM Jewelers · Fine watches">MM Jewelers · Alta relojería</span>
+      <div class="redes" id="redes-menu"></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="ficha" aria-labelledby="f-modelo">
+  <div class="ficha">
+    <div class="ficha__vis">
+      <div class="lienzo" id="f-lienzo"></div>
+      <div class="vistas" id="f-vistas"></div>
+      <p class="eti" data-en="Drag to turn">Arrastra para girar</p>
+    </div>
+    <div class="ficha__txt">
+      <div class="ficha__top">
+        <span class="eti" id="f-cuenta"></span>
+        <div class="nav-ficha">
+          <button class="redondo" type="button" data-paso="-1" aria-label="Anterior">←</button>
+          <button class="redondo" type="button" data-paso="1" aria-label="Siguiente">→</button>
+          <button class="redondo" type="button" data-cerrar aria-label="Cerrar">✕</button>
+        </div>
+      </div>
+      <p class="eti" id="f-marca" style="margin-top:40px"></p>
+      <h3 class="serif" id="f-modelo"></h3>
+      <dl class="specs" id="f-specs"></dl>
+      <div class="colores" id="f-colores"></div>
+      <p class="precio"><small data-en="Price">Precio</small><span id="f-precio"></span></p>
+      <div class="acciones"><a class="btn" href="#contacto" data-cerrar data-en="Inquire about this piece">Consultar esta pieza</a></div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(() => {
+/* =========================================================
+   INVENTARIO · edita aquí.
+   img: ruta de la foto (PNG con fondo transparente, ej. "img/relojes/sub.png").
+   Mientras img esté vacío se dibuja un reloj de muestra con la forma,
+   el metal y la esfera indicados.
+   precio: número en USD, o null para mostrar "Por confirmar".
+   ========================================================= */
+const RELOJES = [
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Oyster Perpetual 41", ref:"134303", precio:10000,
+   img:"img/relojes/op41-134303-frente.webp",
+   vistas:[["Frente","Front","img/relojes/op41-134303-frente.webp"],["Lado","Side","img/relojes/op41-134303-lado.webp"],["Fondo","Back","img/relojes/op41-134303-fondo.webp"]],
+   caja:"41 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 3230", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente · 6 esferas disponibles
+  {marca:"Rolex", modelo:"Oyster Perpetual 31", ref:"277200", precio:6500,
+   img:"img/relojes/op31-277200-lavanda.webp",
+   colores:[["Lavanda","Lavender","#b9b6e6","img/relojes/op31-277200-lavanda.webp"],["Turquesa","Turquoise","#7fd6e0","img/relojes/op31-277200-turquesa.webp"],["Verde","Green","#0f7a3a","img/relojes/op31-277200-verde.webp"],
+            ["Azul","Blue","#1d5fa3","img/relojes/op31-277200-azul.webp"],["Negro","Black","#111","img/relojes/op31-277200-negro.webp"],["Celebración","Celebration","conic-gradient(#e63946,#f4a261,#e9c46a,#2a9d8f,#457b9d,#9b5de5,#e63946)","img/relojes/op31-277200-celebracion.webp"]],
+   vistas:[["Frente","Front","img/relojes/op31-277200-lavanda.webp"],["Lado","Side","img/relojes/op31-277200-lado.webp"],["Fondo","Back","img/relojes/op31-277200-fondo.webp"]],
+   caja:"31 mm · Oystersteel", mov:"Automático · Cal. 2232", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Oyster Perpetual 28", ref:"276248RBR", precio:37250, img:"img/relojes/op28-276248rbr-frente.webp",
+   vistas:[["Frente","Front","img/relojes/op28-276248rbr-frente.webp"],["Lado","Side","img/relojes/op28-276248rbr-lado.webp"],["Fondo","Back","img/relojes/op28-276248rbr-fondo.webp"]],
+   forma:"redondo", metal:"oro", bisel:"diamantes", esfera:"#7fd6e0", correa:"brazalete",
+   caja:"28 mm · Oro amarillo y diamantes", mov:"Automático · Cal. 2232", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Oyster Perpetual 34", ref:"124245RBR", precio:47050, img:"img/relojes/op34-124245rbr-frente.webp",
+   vistas:[["Frente","Front","img/relojes/op34-124245rbr-frente.webp"],["Lado","Side","img/relojes/op34-124245rbr-lado.webp"],["Fondo","Back","img/relojes/op34-124245rbr-fondo.webp"]],
+   caja:"34 mm · Oro Everose y diamantes", mov:"Automático · Cal. 2232", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · fotos recibidas · REFERENCIA Y PRECIO PENDIENTES
+  {marca:"Rolex", modelo:"Oyster Perpetual 31", ref:"—", precio:null, img:"img/relojes/op31-rolesor-frente.webp",
+   vistas:[["Frente","Front","img/relojes/op31-rolesor-frente.webp"],["Lado","Side","img/relojes/op31-rolesor-lado.webp"],["Fondo","Back","img/relojes/op31-rolesor-fondo.webp"]],
+   caja:"31 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 2232", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Submariner Date", ref:"126613LB", precio:20200, img:"img/relojes/sub-126613lb-frente.webp",
+   vistas:[["Frente","Front","img/relojes/sub-126613lb-frente.webp"],["Lado","Side","img/relojes/sub-126613lb-lado.webp"],["Fondo","Back","img/relojes/sub-126613lb-fondo.webp"]],
+   caja:"41 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 3235", hermet:"300 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Submariner Date", ref:"126613LN", precio:20200, img:"img/relojes/sub-126613ln-frente.webp",
+   vistas:[["Frente","Front","img/relojes/sub-126613ln-frente.webp"],["Lado","Side","img/relojes/sub-126613ln-lado.webp"],["Fondo","Back","img/relojes/sub-126613ln-fondo.webp"]],
+   caja:"41 mm · Oystersteel y oro amarillo", mov:"Automático · Cal. 3235", hermet:"300 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Submariner Date", ref:"126610LV", precio:12350, img:"img/relojes/sub-126610lv-frente.webp",
+   vistas:[["Frente","Front","img/relojes/sub-126610lv-frente.webp"],["Lado","Side","img/relojes/sub-126610lv-lado.webp"],["Fondo","Back","img/relojes/sub-126610lv-fondo.webp"]],
+   caja:"41 mm · Oystersteel", mov:"Automático · Cal. 3235", hermet:"300 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · recibido del cliente
+  {marca:"Rolex", modelo:"Yacht-Master II", ref:"126680", precio:21100, img:"img/relojes/ym2-126680-frente.webp",
+   vistas:[["Frente","Front","img/relojes/ym2-126680-frente.webp"],["Lado","Side","img/relojes/ym2-126680-lado.webp"],["Fondo","Back","img/relojes/ym2-126680-fondo.webp"]],
+   caja:"44 mm · Oystersteel", mov:"Automático · Cal. 4161", hermet:"100 m", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}},
+  // ✔ REAL · fotos recibidas · REFERENCIA Y PRECIO PENDIENTES
+  {marca:"Audemars Piguet", modelo:"Royal Oak Extraplano Tourbillon Volante Cronógrafo", ref:"RD#5", precio:null, img:"img/relojes/ap-ro-rd5-frente.webp",
+   vistas:[["Frente","Front","img/relojes/ap-ro-rd5-frente.webp"],["Lado","Side","img/relojes/ap-ro-rd5-lado.webp"],["Fondo","Back","img/relojes/ap-ro-rd5-fondo.webp"]],
+   caja:"Acero", mov:"Automático · Tourbillon volante · Cronógrafo", hermet:"—", anio:"—", estado:{es:"Por confirmar",en:"To be confirmed"}}
+];
+// Siluetas de lo que viene (se muestran borrosas en «Próximamente»)
+const PROXIMOS = [
+  {marca:"Cartier", modelo:"Tank Louis", ref:"WGTA0011", precio:null, img:"",
+   forma:"tank", metal:"oro", esfera:"#f1ece2", correa:"piel", pielColor:"#4a2a18",
+   caja:"33.7 × 25.5 mm · Oro amarillo", mov:"Cuerda manual", hermet:"30 m", anio:"2021", estado:{es:"Muy bueno",en:"Very good"}},
+  {marca:"Patek Philippe", modelo:"Nautilus", ref:"5711/1A", precio:null, img:"",
+   forma:"cojin", metal:"acero", esfera:"#23406e", correa:"brazalete", fecha:true,
+   caja:"40 mm · Acero", mov:"Automático · Cal. 26-330 S C", hermet:"120 m", anio:"2020", estado:{es:"Excelente",en:"Excellent"}},
+  {marca:"Rolex", modelo:"Cosmograph Daytona", ref:"126508", precio:null, img:"",
+   forma:"redondo", metal:"oro", bisel:"taquimetro", biselColor:"#c9a24e", esfera:"#d8c38a", correa:"brazalete", crono:true,
+   caja:"40 mm · Oro amarillo 18k", mov:"Automático · Cal. 4131", hermet:"100 m", anio:"2023", estado:{es:"Nuevo",en:"Unworn"}}
+];
+const EN_VITRINA = 8;
+const porRef = (r) => RELOJES.findIndex((w) => w.ref === r);
+
+/* ---------- Idioma ---------- */
+let LANG = "es";
+try { LANG = new URLSearchParams(location.search).get("lang") || localStorage.getItem("mm-lang") || "es"; } catch (e) {}
+if (LANG !== "en") LANG = "es";
+const T = (es, en) => (LANG === "en" ? en : es);
+const precioTxt = (p) => p == null ? T("Por confirmar", "On request") : "USD " + p.toLocaleString("en-US");
+const aplicarIdioma = () => {
+  document.documentElement.lang = LANG;
+  document.querySelectorAll("[data-en],[data-en-html]").forEach((el) => {
+    if (el.dataset.es === undefined) el.dataset.es = el.hasAttribute("data-en-html") ? el.innerHTML : el.textContent;
+    if (el.hasAttribute("data-en-html")) el.innerHTML = LANG === "en" ? el.dataset.enHtml : el.dataset.es;
+    else el.textContent = LANG === "en" ? el.dataset.en : el.dataset.es;
+  });
+  document.querySelectorAll("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === LANG));
+  pintarDinamico();
+};
+document.querySelectorAll("[data-lang]").forEach((b) => b.addEventListener("click", () => {
+  LANG = b.dataset.lang;
+  try { localStorage.setItem("mm-lang", LANG); } catch (e) {}
+  aplicarIdioma();
+}));
+
+/* ---------- Dibujo de relojes de muestra (SVG) ---------- */
+const METALES = {
+  acero: ["#fbfcfd", "#a7adb4", "#eef0f2", "#6a7078"],
+  oro:   ["#fff4cf", "#c9a24e", "#f7e09a", "#86651f"],
+  rosa:  ["#ffe2d3", "#c4836a", "#f4bfa6", "#7c4936"],
+};
+let uid = 0;
+function svgReloj(w, conSegundero = true) {
+  const id = "r" + (uid++);
+  const m = METALES[w.metal] || METALES.acero;
+  const C = { x: 100, y: 150 };
+  const defs = `<defs>
+    <linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${m[0]}"/><stop offset=".35" stop-color="${m[1]}"/><stop offset=".6" stop-color="${m[2]}"/><stop offset="1" stop-color="${m[3]}"/></linearGradient>
+    <linearGradient id="${id}mv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${m[3]}"/><stop offset=".5" stop-color="${m[0]}"/><stop offset="1" stop-color="${m[3]}"/></linearGradient>
+    <radialGradient id="${id}e" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="${w.esfera}" stop-opacity="0"/></radialGradient>
+    <pattern id="${id}t" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="${w.esfera}"/><rect x=".8" y=".8" width="3.4" height="3.4" fill="#000" opacity=".28"/></pattern>
+    <pattern id="${id}h" width="6" height="4" patternUnits="userSpaceOnUse"><rect width="6" height="4" fill="${w.esfera}"/><rect y="2.6" width="6" height="1" fill="#000" opacity=".25"/></pattern>
+  </defs>`;
+  const oscuro = parseInt(w.esfera.slice(1, 3), 16) < 120;
+  const tinta = oscuro ? "#f2f0ea" : "#1b1b1f";
+  // Correa
+  let correa;
+  if (w.correa === "piel") {
+    const c = w.pielColor || "#3a2416";
+    correa = `<rect x="70" y="0" width="60" height="96" rx="8" fill="${c}"/><rect x="70" y="204" width="60" height="96" rx="8" fill="${c}"/>
+      <rect x="74" y="4" width="52" height="88" rx="6" fill="none" stroke="#fff" stroke-opacity=".18" stroke-dasharray="2 3"/>
+      <rect x="74" y="208" width="52" height="88" rx="6" fill="none" stroke="#fff" stroke-opacity=".18" stroke-dasharray="2 3"/>`;
+  } else {
+    let eslabones = "";
+    for (let y = 2; y < 96; y += 13) eslabones += `<rect x="70" y="${y}" width="60" height="11" rx="2" fill="url(#${id}mv)"/><rect x="88" y="${y}" width="24" height="11" fill="url(#${id}m)" opacity=".9"/>`;
+    for (let y = 206; y < 298; y += 13) eslabones += `<rect x="70" y="${y}" width="60" height="11" rx="2" fill="url(#${id}mv)"/><rect x="88" y="${y}" width="24" height="11" fill="url(#${id}m)" opacity=".9"/>`;
+    correa = eslabones;
+  }
+  // Caja, bisel y esfera según forma
+  let caja = "", esfera = "", indices = "", extra = "";
+  const R = 54; // radio útil de la esfera
+  const indicesRedondos = (r1, r2, romanos) => {
+    let s = "";
+    if (romanos) {
+      const rn = ["XII","I","II","III","IIII","V","VI","VII","VIII","IX","X","XI"];
+      rn.forEach((t, i) => { const a = (i * 30 - 90) * Math.PI / 180;
+        s += `<text x="${C.x + Math.cos(a) * (r1 - 6)}" y="${C.y + Math.sin(a) * (r1 - 6) + 3}" font-family="Cormorant Garamond,serif" font-size="8.5" text-anchor="middle" fill="${tinta}">${t}</text>`; });
+      return s;
+    }
+    for (let i = 0; i < 12; i++) {
+      const a = i * 30;
+      if (w.fecha && i === 3) continue;
+      const ancho = i === 0 ? 7 : 3.6, largo = i % 3 === 0 ? 11 : 8;
+      s += `<rect x="${C.x - ancho / 2}" y="${C.y - r1}" width="${ancho}" height="${largo}" rx="1" fill="${w.metal === "acero" ? "#e8eaee" : m[2]}" stroke="#000" stroke-opacity=".3" stroke-width=".4" transform="rotate(${a} ${C.x} ${C.y})"/>`;
+      if (i % 3 === 0 && oscuro) s += `<rect x="${C.x - ancho / 2 + 1}" y="${C.y - r1 + 1.5}" width="${ancho - 2}" height="${largo - 3}" fill="#f4f6e8" transform="rotate(${a} ${C.x} ${C.y})"/>`;
+    }
+    return s;
+  };
+  if (w.forma === "redondo") {
+    caja = `<rect x="66" y="74" width="68" height="152" rx="10" fill="url(#${id}m)"/>
+      <rect x="168" y="142" width="10" height="16" rx="2" fill="url(#${id}m)"/>
+      <circle cx="100" cy="150" r="74" fill="url(#${id}m)"/>`;
+    const b = w.bisel || "liso";
+    if (b === "estriado") {
+      caja += `<circle cx="100" cy="150" r="66" fill="none" stroke="url(#${id}mv)" stroke-width="12"/><circle cx="100" cy="150" r="66" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="12" stroke-dasharray="1.2 2.2"/>`;
+    } else if (b === "ceramica" || b === "taquimetro") {
+      caja += `<circle cx="100" cy="150" r="66" fill="none" stroke="${w.biselColor || "#111"}" stroke-width="12"/>`;
+      for (let i = 0; i < 60; i += (b === "ceramica" ? 5 : 2)) caja += `<rect x="99.4" y="${150 - 71}" width="1.2" height="${i % 15 === 0 ? 7 : 4}" fill="${b === "taquimetro" && w.biselColor !== "#111" ? "#3a2a08" : "#d9d4c4"}" transform="rotate(${i * 6} 100 150)"/>`;
+      if (b === "ceramica") caja += `<polygon points="100,80 95,88 105,88" fill="#d9d4c4"/>`;
+    } else if (b === "diamantes") {
+      caja += `<circle cx="100" cy="150" r="66" fill="none" stroke="url(#${id}mv)" stroke-width="13"/>`;
+      for (let i = 0; i < 40; i++) { const a = i * 9 * Math.PI / 180; caja += `<circle cx="${100 + Math.cos(a) * 66}" cy="${150 + Math.sin(a) * 66}" r="4.4" fill="#fbfdff" stroke="#9fb3c8" stroke-width=".6"/><circle cx="${100 + Math.cos(a) * 66 - 1.2}" cy="${150 + Math.sin(a) * 66 - 1.2}" r="1.2" fill="#fff"/>`; }
+    } else if (b === "pepsi") {
+      caja += `<path d="M34 150a66 66 0 0 1 132 0" fill="none" stroke="#a4161a" stroke-width="12"/><path d="M166 150a66 66 0 0 1-132 0" fill="none" stroke="#1b2f7a" stroke-width="12"/>`;
+      for (let i = 0; i < 24; i++) caja += `<rect x="99.4" y="79" width="1.2" height="${i % 2 ? 4 : 7}" fill="#e8e4d6" transform="rotate(${i * 15} 100 150)"/>`;
+    } else {
+      caja += `<circle cx="100" cy="150" r="66" fill="none" stroke="url(#${id}mv)" stroke-width="12"/>`;
+    }
+    esfera = `<circle cx="100" cy="150" r="${R + 6}" fill="${w.esfera}"/><circle cx="100" cy="150" r="${R + 6}" fill="url(#${id}e)"/>`;
+    indices = indicesRedondos(R, 0, w.romanos);
+    if (w.cabujon) extra += `<circle cx="179" cy="150" r="5" fill="#2b4fd1"/><circle cx="177.5" cy="148.5" r="1.5" fill="#fff" opacity=".6"/>`;
+  } else if (w.forma === "octogonal") {
+    const oct = (r) => Array.from({ length: 8 }, (_, i) => { const a = (i * 45 + 22.5) * Math.PI / 180; return `${100 + Math.cos(a) * r},${150 + Math.sin(a) * r}`; }).join(" ");
+    caja = `<rect x="60" y="72" width="80" height="156" rx="14" fill="url(#${id}m)"/><rect x="166" y="142" width="10" height="16" rx="3" fill="url(#${id}m)"/>
+      <rect x="28" y="78" width="144" height="144" rx="44" fill="url(#${id}m)"/>
+      <polygon points="${oct(68)}" fill="url(#${id}mv)" stroke="#000" stroke-opacity=".25"/>`;
+    for (let i = 0; i < 8; i++) { const a = (i * 45 + 22.5) * Math.PI / 180; caja += `<circle cx="${100 + Math.cos(a) * 60}" cy="${150 + Math.sin(a) * 60}" r="3.2" fill="${m[0]}" stroke="#000" stroke-opacity=".35"/><rect x="${100 + Math.cos(a) * 60 - 2.4}" y="${150 + Math.sin(a) * 60 - .5}" width="4.8" height="1" fill="#000" opacity=".4" transform="rotate(${i * 45} ${100 + Math.cos(a) * 60} ${150 + Math.sin(a) * 60})"/>`; }
+    esfera = `<circle cx="100" cy="150" r="${R}" fill="url(#${id}t)"/><circle cx="100" cy="150" r="${R}" fill="url(#${id}e)"/>`;
+    indices = indicesRedondos(R - 2, 0, false);
+  } else if (w.forma === "cojin") {
+    caja = `<rect x="64" y="70" width="72" height="160" rx="12" fill="url(#${id}m)"/>
+      <path d="M30 120c0-30 18-44 50-46h40c32 2 50 16 50 46v60c0 30-18 44-50 46H80c-32-2-50-16-50-46z" fill="url(#${id}m)"/>
+      <rect x="24" y="140" width="12" height="20" rx="4" fill="url(#${id}mv)"/><rect x="164" y="140" width="12" height="20" rx="4" fill="url(#${id}mv)"/>
+      <rect x="40" y="88" width="120" height="124" rx="42" fill="url(#${id}mv)"/>`;
+    esfera = `<rect x="48" y="96" width="104" height="108" rx="36" fill="url(#${id}h)"/><rect x="48" y="96" width="104" height="108" rx="36" fill="url(#${id}e)"/>`;
+    indices = indicesRedondos(R - 6, 0, false);
+  } else if (w.forma === "tank" || w.forma === "santos") {
+    const santos = w.forma === "santos";
+    const [cw, ch] = santos ? [128, 128] : [96, 136];
+    const x = 100 - cw / 2, y = 150 - ch / 2;
+    caja = santos
+      ? `<rect x="${x + 16}" y="70" width="${cw - 32}" height="160" rx="8" fill="url(#${id}m)"/>`
+      : `<rect x="${x - 6}" y="${y - 6}" width="12" height="${ch + 12}" rx="5" fill="url(#${id}mv)"/><rect x="${x + cw - 6}" y="${y - 6}" width="12" height="${ch + 12}" rx="5" fill="url(#${id}mv)"/>`;
+    caja += `<rect x="${x}" y="${y}" width="${cw}" height="${ch}" rx="${santos ? 22 : 10}" fill="url(#${id}m)"/>
+      <rect x="${x + cw - 2}" y="142" width="10" height="16" rx="3" fill="url(#${id}m)"/><polygon points="${x + cw + 8},150 ${x + cw + 14},146 ${x + cw + 14},154" fill="#2b4fd1"/>`;
+    if (santos) [[x + 12, y + 12], [x + cw - 12, y + 12], [x + 12, y + ch - 12], [x + cw - 12, y + ch - 12], [100, y + 7], [100, y + ch - 7], [x + 7, 150], [x + cw - 7, 150]].forEach(([a, b]) => caja += `<circle cx="${a}" cy="${b}" r="3" fill="${m[0]}" stroke="#000" stroke-opacity=".3"/>`);
+    const dx = x + (santos ? 16 : 9), dy = y + (santos ? 16 : 10), dw = cw - (santos ? 32 : 18), dh = ch - (santos ? 32 : 20);
+    esfera = `<rect x="${dx}" y="${dy}" width="${dw}" height="${dh}" rx="${santos ? 10 : 4}" fill="${w.esfera}"/><rect x="${dx}" y="${dy}" width="${dw}" height="${dh}" rx="4" fill="url(#${id}e)"/>
+      <rect x="${dx + 5}" y="${dy + 5}" width="${dw - 10}" height="${dh - 10}" fill="none" stroke="#1b1b1f" stroke-width=".6" stroke-dasharray=".6 2.2"/>`;
+    const rn = { XII: [100, dy + 18], III: [dx + dw - 12, 153], VI: [100, dy + dh - 9], IX: [dx + 12, 153], I: [dx + dw * .72, dy + 20], II: [dx + dw - 13, dy + dh * .3], IIII: [dx + dw - 14, dy + dh * .7], V: [dx + dw * .72, dy + dh - 12], VII: [dx + dw * .28, dy + dh - 12], VIII: [dx + 14, dy + dh * .7], X: [dx + 13, dy + dh * .3], XI: [dx + dw * .28, dy + 20] };
+    for (const [t, [a, b]] of Object.entries(rn)) indices += `<text x="${a}" y="${b}" font-family="Cormorant Garamond,serif" font-size="${t.length > 2 ? 8 : 10}" font-weight="500" text-anchor="middle" fill="#1b1b1f">${t}</text>`;
+  }
+  // Subesferas de cronógrafo y fecha
+  if (w.crono) [[100, 125], [76, 150], [124, 150]].forEach(([a, b]) => extra += `<circle cx="${a}" cy="${b}" r="11" fill="${oscuro ? "#2a2a2e" : "#1b1b1f"}" stroke="${m[2]}" stroke-width="1"/><line x1="${a}" y1="${b}" x2="${a}" y2="${b - 8}" stroke="${m[0]}" stroke-width="1"/>`);
+  if (w.fecha && !w.crono) extra += `<rect x="134" y="144" width="15" height="12" rx="1" fill="#fff" stroke="${m[2]}"/><text x="141.5" y="153.3" font-family="Manrope,sans-serif" font-size="8" font-weight="600" text-anchor="middle" fill="#111">${new Date().getDate()}</text>`;
+  // Agujas (se giran desde JS)
+  const mano = w.metal === "acero" ? "#eef0f2" : m[2];
+  const agujas = `<g class="ag-h"><path d="M98 152 L98.6 118 L100 113 L101.4 118 L102 152Z" fill="${mano}" stroke="#000" stroke-opacity=".35" stroke-width=".5"/></g>
+    <g class="ag-m"><path d="M98.8 152 L99.3 100 L100 96 L100.7 100 L101.2 152Z" fill="${mano}" stroke="#000" stroke-opacity=".35" stroke-width=".5"/></g>
+    ${conSegundero ? `<g class="ag-s"><line x1="100" y1="164" x2="100" y2="100" stroke="${w.bisel === "pepsi" ? "#a4161a" : "#c9a24e"}" stroke-width=".9"/><circle cx="100" cy="106" r="2" fill="none" stroke="${w.bisel === "pepsi" ? "#a4161a" : "#c9a24e"}" stroke-width=".8"/></g>` : ""}
+    <circle cx="100" cy="150" r="3.2" fill="${mano}" stroke="#000" stroke-opacity=".4"/>`;
+  const reflejo = `<path d="M52 118 Q100 70 150 112 Q100 96 52 118Z" fill="#fff" opacity=".07"/>`;
+  return `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${w.marca} ${w.modelo}">${defs}${correa}${caja}${esfera}${indices}${extra}${agujas}${reflejo}</svg>`;
+}
+const ponerHora = (raiz, d, suave = true) => {
+  const s = d.getSeconds() + (suave ? d.getMilliseconds() / 1000 : 0);
+  const mi = d.getMinutes() + s / 60, h = (d.getHours() % 12) + mi / 60;
+  raiz.querySelectorAll(".ag-h").forEach((g) => g.setAttribute("transform", `rotate(${h * 30} 100 150)`));
+  raiz.querySelectorAll(".ag-m").forEach((g) => g.setAttribute("transform", `rotate(${mi * 6} 100 150)`));
+  raiz.querySelectorAll(".ag-s").forEach((g) => g.setAttribute("transform", `rotate(${s * 6} 100 150)`));
+};
+// Hora de catálogo clásica: 10:10:35
+const HORA_FOTO = new Date(2000, 0, 1, 10, 10, 35);
+const visual = (w, seg) => w.img ? `<img src="${w.img}" alt="${w.marca} ${w.modelo}" loading="lazy" decoding="async">` : svgReloj(w, seg);
+
+const quieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- Portada: reloj vivo con la hora real ---------- */
+const heroW = { marca: "MM", modelo: "", forma: "redondo", metal: "oro", bisel: "estriado", esfera: "#14130f", correa: "brazalete", fecha: true };
+const heroEl = document.getElementById("reloj-hero");
+heroEl.innerHTML = svgReloj(heroW);
+const horaEl = document.getElementById("hora-hero");
+const tic = () => {
+  const d = new Date();
+  ponerHora(heroEl, d, !quieto);
+  horaEl.textContent = d.toLocaleTimeString(LANG === "en" ? "en-US" : "es-PA", { hour: "2-digit", minute: "2-digit" }) + " · " + T("Hora local", "Local time");
+  if (fichaVivo && dlg.open) ponerHora(lienzo, d, true);
+  requestAnimationFrame(tic);
+};
+
+/* ---------- Vitrina ---------- */
+const estuchesEl = document.getElementById("estuches");
+const vitrina = RELOJES.slice(0, EN_VITRINA);
+vitrina.forEach((w, i) => {
+  const li = document.createElement("li");
+  li.className = "estuche";
+  li.innerHTML = `<button type="button" aria-label="${w.marca} ${w.modelo}"><div class="cristal"><span class="cojin"></span><div class="pieza">${visual(w, false)}</div></div><p class="placa">${w.marca}</p></button>`;
+  ponerHora(li, HORA_FOTO, false);
+  estuchesEl.append(li);
+});
+const estuches = [...estuchesEl.children];
+let activo = -1;
+const activar = (i) => {
+  if (i === activo) return;
+  activo = i;
+  estuches.forEach((li, k) => li.classList.toggle("activa", k === i));
+  pintarDinamico();
+};
+estuches.forEach((li, i) => {
+  li.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") activar(i); });
+  li.querySelector("button").addEventListener("focus", () => activar(i));
+  li.querySelector("button").addEventListener("click", () => abrir(RELOJES.indexOf(vitrina[i])));
+});
+// En táctil, la vitrina se desliza: manda el estuche más cercano al centro (uno solo, siempre).
+let pedidoV = false;
+estuchesEl.addEventListener("scroll", () => {
+  if (pedidoV) return; pedidoV = true;
+  requestAnimationFrame(() => {
+    pedidoV = false;
+    const c = estuchesEl.getBoundingClientRect(), mid = c.left + c.width / 2;
+    let mejor = 0, d = Infinity;
+    estuches.forEach((li, k) => { const r = li.getBoundingClientRect(), dd = Math.abs(r.left + r.width / 2 - mid); if (dd < d) { d = dd; mejor = k; } });
+    activar(mejor);
+  });
+}, { passive: true });
+
+/* ---------- Próximamente ---------- */
+const filaPronto = document.getElementById("pronto-fila");
+const tipos = [["Una pieza de Cartier", "A Cartier piece"], ["Un clásico de Patek Philippe", "A Patek Philippe classic"], ["Un cronógrafo icónico", "An iconic chronograph"]];
+PROXIMOS.forEach((w, i) => {
+  const d = document.createElement("div");
+  d.className = "velo";
+  d.innerHTML = `<div class="velo__pieza">${svgReloj(w, false)}</div><div class="velo__txt"><span class="eti">${T("Próximamente", "Coming soon")}</span><b data-es="${tipos[i][0]}" data-en="${tipos[i][1]}">${T(tipos[i][0], tipos[i][1])}</b></div>`;
+  filaPronto.append(d);
+});
+
+/* ---------- Catálogo ---------- */
+const rejilla = document.getElementById("rejilla");
+const filtrosEl = document.getElementById("filtros");
+RELOJES.forEach((w, i) => {
+  const a = document.createElement("article");
+  a.className = "carta"; a.dataset.marca = w.marca;
+  a.innerHTML = `<div class="carta__vis">${visual(w, false)}</div><div class="carta__txt"><p class="eti">${w.marca}</p><h3>${w.modelo}</h3><p class="p"><span>Ref. ${w.ref}</span><b class="precio-c"></b></p></div><button type="button" aria-label="${w.marca} ${w.modelo}"></button>`;
+  ponerHora(a, HORA_FOTO, false);
+  a.querySelector("button").addEventListener("click", () => abrir(i));
+  rejilla.append(a);
+});
+const cartas = [...rejilla.children];
+const finCat = document.createElement("a");
+finCat.className = "carta carta--pronto"; finCat.href = "#pronto";
+finCat.innerHTML = `<div><p class="eti" data-en="Coming soon">Próximamente</p><p data-en="More references are on their way.">Más referencias en camino.</p></div>`;
+rejilla.append(finCat);
+const marcas = ["*", ...new Set(RELOJES.map((w) => w.marca))];
+marcas.forEach((mc) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.dataset.marca = mc;
+  b.setAttribute("aria-pressed", mc === "*");
+  b.addEventListener("click", () => {
+    filtrosEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+    cartas.forEach((c) => (c.hidden = !(mc === "*" || c.dataset.marca === mc)));
+  });
+  filtrosEl.append(b);
+});
+
+/* ---------- Ficha ---------- */
+const dlg = document.getElementById("ficha");
+const lienzo = document.getElementById("f-lienzo");
+let actual = 0, fichaVivo = false, giro = 0;
+function abrir(i) {
+  actual = (i + RELOJES.length) % RELOJES.length;
+  const w = RELOJES[actual];
+  lienzo.innerHTML = visual(w, true);
+  fichaVivo = !w.img; giro = 0;
+  const coloresEl = document.getElementById("f-colores");
+  coloresEl.innerHTML = "";
+  if (w.colores) {
+    coloresEl.innerHTML = `<p class="eti">${T("Esfera", "Dial")} · <span id="f-color">${T(w.colores[0][0], w.colores[0][1])}</span></p><div class="colores__fila"></div>`;
+    w.colores.forEach(([es, en, sw, src], k) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.style.setProperty("--sw", sw);
+      b.setAttribute("aria-label", T(es, en)); b.setAttribute("aria-pressed", k === 0);
+      b.addEventListener("click", () => {
+        lienzo.innerHTML = `<img src="${src}" alt="${w.marca} ${w.modelo} · ${T(es, en)}">`;
+        coloresEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+        document.getElementById("f-color").textContent = T(es, en);
+        // La miniatura «Frente» pasa a mostrar la esfera elegida
+        const fr = document.querySelector("#f-vistas button");
+        if (fr) { fr.querySelector("img").src = src; fr._src = src; document.querySelectorAll("#f-vistas button").forEach((x) => x.setAttribute("aria-pressed", x === fr)); }
+      });
+      coloresEl.querySelector(".colores__fila").append(b);
+    });
+  }
+  const vistasEl = document.getElementById("f-vistas");
+  vistasEl.innerHTML = "";
+  (w.vistas || []).forEach(([es, en, src], k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("aria-pressed", k === 0);
+    b.innerHTML = `<span><img src="${src}" alt=""></span>${T(es, en)}`;
+    b.addEventListener("click", () => {
+      lienzo.innerHTML = `<img src="${b._src || src}" alt="${w.marca} ${w.modelo} · ${T(es, en)}">`;
+      vistasEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+    });
+    vistasEl.append(b);
+  });
+  if (!dlg.open) dlg.showModal();
+  pintarDinamico();
+}
+const mover = (d) => abrir(actual + d);
+dlg.addEventListener("click", (e) => {
+  if (e.target.closest("[data-cerrar]")) dlg.close();
+  const p = e.target.closest("[data-paso]"); if (p) mover(+p.dataset.paso);
+});
+dlg.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") mover(1); if (e.key === "ArrowLeft") mover(-1); });
+// Arrastrar para girar la pieza (inclinación 3D, vuelve sola al soltar)
+let x0 = null;
+lienzo.addEventListener("pointerdown", (e) => { x0 = e.clientX; lienzo.setPointerCapture(e.pointerId); });
+lienzo.addEventListener("pointermove", (e) => {
+  if (x0 === null) return;
+  giro = Math.max(-40, Math.min(40, (e.clientX - x0) / 4));
+  lienzo.firstElementChild.style.transform = `perspective(800px) rotateY(${giro}deg) scale(1.03)`;
+});
+const soltar = (e) => {
+  if (x0 === null) return;
+  const dx = e.clientX - x0; x0 = null;
+  lienzo.firstElementChild.style.transform = "";
+  if (e.pointerType !== "mouse" && Math.abs(dx) > 120) mover(dx < 0 ? 1 : -1);
+};
+lienzo.addEventListener("pointerup", soltar);
+lienzo.addEventListener("pointercancel", soltar);
+
+/* ---------- Textos que dependen del idioma ---------- */
+function pintarDinamico() {
+  filtrosEl.querySelectorAll("button").forEach((b) => (b.textContent = b.dataset.marca === "*" ? T("Todas", "All") : b.dataset.marca));
+  cartas.forEach((c, i) => (c.querySelector(".precio-c").textContent = precioTxt(RELOJES[i].precio)));
+  if (activo >= 0) {
+    const w = vitrina[activo];
+    document.getElementById("vit-marca").textContent = w.marca;
+    document.getElementById("vit-modelo").textContent = w.modelo;
+    document.getElementById("vit-ref").textContent = "Ref. " + w.ref + " · " + w.caja;
+    document.getElementById("vit-precio").textContent = precioTxt(w.precio);
+  }
+  if (dlg.open) {
+    const w = RELOJES[actual];
+    document.getElementById("f-cuenta").textContent = String(actual + 1).padStart(2, "0") + " / " + String(RELOJES.length).padStart(2, "0");
+    document.getElementById("f-marca").textContent = w.marca;
+    document.getElementById("f-modelo").textContent = w.modelo;
+    document.getElementById("f-precio").textContent = precioTxt(w.precio);
+    const filas = [
+      [T("Referencia", "Reference"), w.ref],
+      [T("Caja", "Case"), LANG === "en" ? w.caja.replace("Acero", "Steel").replace("Oro amarillo", "Yellow gold").replace("Oro rosa", "Rose gold").replace(" y oro blanco", " and white gold").replace(" y oro amarillo", " and yellow gold").replace("Oro amarillo y diamantes", "Yellow gold and diamonds").replace("Oro Everose y diamantes", "Everose gold and diamonds").replace(/^Acero$/, "Steel") : w.caja],
+      [T("Movimiento", "Movement"), LANG === "en" ? w.mov.replace("Automático", "Automatic").replace("Cuerda manual", "Manual winding") : w.mov],
+      [T("Hermeticidad", "Water resistance"), w.hermet],
+      [T("Año", "Year"), w.anio],
+      [T("Estado", "Condition"), w.estado[LANG]],
+    ];
+    document.getElementById("f-specs").innerHTML = filas.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+  }
+}
+
+/* ---------- Ambiente: polvo de oro ---------- */
+if (!quieto) {
+  const amb = document.querySelector(".ambiente");
+  for (let i = 0; i < 34; i++) {
+    const p = document.createElement("span");
+    p.className = "polvo";
+    p.style.cssText = `--x:${(Math.random() * 100).toFixed(1)}%;--d:${(18 + Math.random() * 20).toFixed(1)}s;--r:-${(Math.random() * 30).toFixed(1)}s;--t:${(1 + Math.random() * 2.6).toFixed(1)}px;--w:${(Math.random() * 80 - 40).toFixed(0)}px`;
+    amb.append(p);
+  }
+}
+
+/* ---------- Revelar al entrar + filo de la barra ---------- */
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("dentro"); io.unobserve(e.target); } }), { threshold: .2 });
+document.querySelectorAll(".revelar").forEach((el) => io.observe(el));
+const bar = document.getElementById("bar");
+new IntersectionObserver(([e]) => bar.classList.toggle("con-filo", !e.isIntersecting), { rootMargin: "-72px 0px 0px 0px" }).observe(document.getElementById("inicio"));
+
+
+/* ---------- Flotantes: relojes que levitan con sombra ---------- */
+const flotante = (w) => `<div class="flota__bob">${visual(w, false)}</div><span class="flota__sombra"></span>`;
+document.querySelectorAll(".flota[data-reloj]").forEach((el) => { el.innerHTML = flotante(RELOJES[porRef(el.dataset.reloj)]); ponerHora(el, HORA_FOTO, false); });
+document.getElementById("redes-menu").innerHTML = document.getElementById("redes").innerHTML;
+
+/* ---------- Escenario: cambia de pieza según el scroll ---------- */
+const escenario = document.getElementById("escenario");
+const escReloj = document.getElementById("escena-reloj");
+const DEST = ["124245RBR", "RD#5", "126610LV"].map(porRef);
+DEST.forEach((k, i) => {
+  const f = document.createElement("div");
+  f.className = "flota"; f.innerHTML = flotante(RELOJES[k]); f.style.animationDelay = `-${i}s`;
+  ponerHora(f, HORA_FOTO, false);
+  escReloj.append(f);
+});
+const escFlotas = [...escReloj.children];
+const escFondos = [...document.querySelectorAll(".escena__fondo")];
+const escTxt = [...document.querySelectorAll("#escena-txt article")];
+const escPuntos = [...document.querySelectorAll("#escena-puntos i")];
+let escIdx = -1;
+document.querySelectorAll("[data-ficha]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); abrir(porRef(a.dataset.ficha)); }));
+
+/* ---------- Historias: la tarjeta de atrás se encoge y se apaga ---------- */
+const hist = [...document.querySelectorAll(".hist")];
+
+const alScroll = () => {
+  // Escenario
+  const r = escenario.getBoundingClientRect();
+  const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+  const idx = Math.min(DEST.length - 1, Math.floor(p * DEST.length));
+  if (idx !== escIdx) {
+    escIdx = idx;
+    [escFlotas, escFondos, escTxt, escPuntos].forEach((grupo) => grupo.forEach((el, k) => el.classList.toggle("on", k === idx)));
+  }
+  const local = p * DEST.length - idx;            // 0→1 dentro de cada pieza
+  escReloj.style.setProperty("--giro", ((local - .5) * 10).toFixed(2) + "deg");
+  escReloj.style.setProperty("--zoom", (1.04 - Math.abs(local - .5) * .12).toFixed(3));
+  // Pila de historias
+  hist.forEach((h, i) => {
+    const sig = hist[i + 1];
+    if (!sig) return;
+    const tope = parseFloat(getComputedStyle(sig).top);
+    const t = Math.min(1, Math.max(0, (innerHeight - sig.getBoundingClientRect().top) / (innerHeight - tope)));
+    h.style.setProperty("--s", (1 - t * .06).toFixed(4));
+    h.style.setProperty("--b", (1 - t * .45).toFixed(3));
+  });
+};
+let pedidoE = false;
+addEventListener("scroll", () => { if (pedidoE) return; pedidoE = true; requestAnimationFrame(() => { pedidoE = false; alScroll(); }); }, { passive: true });
+addEventListener("resize", alScroll);
+
+/* ---------- Menú ---------- */
+const menu = document.getElementById("menu");
+document.getElementById("abrir-menu").addEventListener("click", () => menu.showModal());
+menu.addEventListener("click", (e) => { if (e.target.closest("[data-cierra]")) menu.close(); });
+
+/* ---------- Video: si no existe, se quita sin dejar hueco ---------- */
+const vid = document.getElementById("video-hero");
+const sinVideo = () => vid.closest(".hero__video").remove();
+vid.addEventListener("loadeddata", () => document.getElementById("inicio").classList.add("con-video"));
+if (vid.readyState >= 2) document.getElementById("inicio").classList.add("con-video");
+vid.querySelectorAll("source")[1].addEventListener("error", sinVideo);
+if (quieto) { vid.removeAttribute("autoplay"); vid.pause(); }
+
+/* ---------- Arranque ---------- */
+aplicarIdioma();
+const inicial = Math.floor(estuches.length / 2) - 1;
+activar(inicial);
+if (estuchesEl.scrollWidth > estuchesEl.clientWidth) estuchesEl.scrollLeft = estuches[inicial].offsetLeft - (estuchesEl.clientWidth - estuches[inicial].offsetWidth) / 2;
+requestAnimationFrame(tic);
+alScroll();
+})();
+</script>
+</body>
+</html>
