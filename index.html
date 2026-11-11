@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MM Jewelers · Alta relojería</title>
+<title>MM Jewelers · Algunos miran la hora. Tú la impones.</title>
 <meta name="description" content="MM Jewelers: catálogo privado de alta relojería. Rolex y Audemars Piguet.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,7 +238,10 @@ dialog{border:0;padding:0;margin:0;width:100%;height:100%;max-width:none;max-hei
 dialog::backdrop{background:rgba(4,4,6,.92);backdrop-filter:blur(6px)}
 .ficha{height:100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);overflow:auto}
 .ficha__vis{position:relative;display:grid;place-items:center;padding:6vh 6vw;background:radial-gradient(circle at 50% 45%,rgba(234,215,168,.16),transparent 60%)}
-.ficha__vis .lienzo{width:min(100%,460px,calc(60svh * 2 / 3));aspect-ratio:2/3;display:grid;place-items:center;cursor:grab;touch-action:none}
+.ficha__vis .lienzo{width:min(100%,460px,calc(60svh * 2 / 3));aspect-ratio:2/3;display:grid;place-items:center;cursor:grab;touch-action:pan-y}
+/* 🐛 Con touch-action:none el dedo sobre el reloj no podía bajar la ficha en el móvil
+   (con el Royal Oak, que llena la pantalla, la ficha quedaba atrapada). pan-y deja el
+   scroll vertical al navegador y el arrastre horizontal sigue girando la pieza. */
 .ficha__vis .lienzo>*{width:100%;height:100%;object-fit:contain;transition:transform var(--t-mid) var(--ease);filter:drop-shadow(0 40px 50px rgba(0,0,0,.7))}
 .vistas{display:flex;gap:10px;margin-top:18px}
 .vistas button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:6px;font:500 9px/1 var(--f-sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
@@ -407,6 +410,30 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 .hist__txt p{color:var(--muted);max-width:36ch;margin:22px 0 30px}
 .hist__txt .btn{align-self:flex-start}
 
+
+/* ---------- Inmersión ----------
+   Telón de entrada, cursor de joyero y portada que se aleja al bajar. */
+.telon{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--bg);pointer-events:none;
+  animation:telonSale .9s var(--ease) 1.7s forwards}
+.telon__mm{display:grid;place-items:center;gap:18px;text-align:center}
+.telon__mm b{display:grid;place-items:center;width:96px;height:96px;border-radius:50%;border:1px solid var(--gold);font:300 34px/1 var(--f-serif);color:var(--gold-lit);
+  animation:telonLogo 1.6s var(--ease) both}
+.telon__mm span{font:500 11px/1 var(--f-sans);letter-spacing:.5em;text-transform:uppercase;color:var(--gold);animation:telonTxt 1.4s .3s var(--ease) both}
+.telon__linea{position:absolute;left:50%;bottom:22%;width:180px;height:1px;translate:-50% 0;background:rgba(201,169,106,.2);overflow:hidden}
+.telon__linea::after{content:"";position:absolute;inset:0;background:var(--gold);transform-origin:left;animation:telonCarga 1.5s var(--ease) both}
+@keyframes telonLogo{from{opacity:0;scale:.8;filter:blur(8px)}}
+@keyframes telonTxt{from{opacity:0;letter-spacing:.9em}}
+@keyframes telonCarga{from{transform:scaleX(0)}}
+@keyframes telonSale{to{opacity:0;visibility:hidden;clip-path:inset(0 0 100% 0)}}
+.cursor{position:fixed;left:0;top:0;z-index:90;pointer-events:none;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+  border:1px solid rgba(234,215,168,.7);transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .35s,border-color .35s;mix-blend-mode:difference}
+.cursor::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;border-radius:50%;background:var(--gold-lit)}
+.cursor.sobre{width:70px;height:70px;margin:-35px 0 0 -35px;background:rgba(234,215,168,.12);border-color:var(--gold)}
+@media (hover:none),(prefers-reduced-motion:reduce){.cursor{display:none}}
+/* La portada se aleja: el video se acerca y se desenfoca, el texto sube */
+.hero__video video{transform:scale(calc(1 + var(--hp,0) * .18));filter:blur(calc(var(--hp,0) * 6px))}
+.hero .shell{opacity:calc(1 - var(--hp,0) * 1.4);translate:0 calc(var(--hp,0) * -80px)}
+
 /* ---------- Responsive ---------- */
 @media (max-width:980px){
   .hero .shell{grid-template-columns:1fr}
@@ -466,11 +493,14 @@ dialog.menu[open] li{opacity:1;translate:0 0}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .telon{display:none}
   .revelar{opacity:1;translate:none}
 }
 </style>
 </head>
 <body>
+<div class="telon" aria-hidden="true"><div class="telon__mm"><b>MM</b><span>Jewelers</span></div><span class="telon__linea"></span></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="ambiente" aria-hidden="true"><span class="haz"></span></div>
 
 <header class="bar" id="bar">
@@ -499,10 +529,10 @@ dialog.menu[open] li{opacity:1;translate:0 0}
   </div>
   <div class="shell">
     <div>
-      <p class="eti" data-en="MM Jewelers · Private catalog">MM Jewelers · Catálogo privado</p>
+      <p class="eti" data-en="MM Jewelers · By invitation only">MM Jewelers · Solo por invitación</p>
       <span class="regla"></span>
-      <h1 class="serif" data-en-html="Time,<br><em>in its most<br>exquisite form.</em>">El tiempo,<br><em>en su forma<br>más exquisita.</em></h1>
-      <p style="margin-top:30px" data-en="Rolex and Audemars Piguet, selected one by one for those who don't settle for telling the time — they make it theirs.">Rolex y Audemars Piguet. Piezas seleccionadas una a una para quien no se conforma con saber la hora: la hace suya.</p>
+      <h1 class="serif" data-en-html="Some check<br>the time.<br><em>You set it.</em>">Algunos miran<br>la hora.<br><em>Tú la impones.</em></h1>
+      <p style="margin-top:30px" data-en="Rolex and Audemars Piguet, chosen one by one for those who have never had to wait for their moment.">Rolex y Audemars Piguet, elegidos uno a uno para quienes nunca han tenido que esperar su momento.</p>
       <div class="acciones">
         <a class="btn" href="#vitrina" data-en="Enter the showcase">Entrar a la vitrina</a>
         <a class="btn btn--linea" href="#catalogo" data-en="Full catalog">Ver catálogo</a>
@@ -1283,6 +1313,20 @@ const ioV = new IntersectionObserver((es) => es.forEach((e) => {
   } else v.pause();
 }), { rootMargin: "200px 0px" });
 vids.forEach((v) => ioV.observe(v));
+
+/* ---------- Cursor de joyero (solo con ratón) ---------- */
+const cur = document.getElementById("cursor");
+const mqRaton = matchMedia("(hover: hover)");
+let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy;
+addEventListener("pointermove", (e) => { if (e.pointerType !== "mouse") return; tx = e.clientX; ty = e.clientY;
+  cur.classList.toggle("sobre", !!e.target.closest("a,button,.estuche,.carta,.tile,.dest")); }, { passive: true });
+const seguir = () => { cx += (tx - cx) * .18; cy += (ty - cy) * .18; cur.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(seguir); };
+if (mqRaton.matches && !quieto) requestAnimationFrame(seguir);
+/* ---------- Portada que se aleja al bajar ---------- */
+const heroS = document.getElementById("inicio");
+let pedidoH = false;
+addEventListener("scroll", () => { if (pedidoH) return; pedidoH = true; requestAnimationFrame(() => {
+  pedidoH = false; heroS.style.setProperty("--hp", Math.min(1, scrollY / innerHeight).toFixed(3)); }); }, { passive: true });
 
 /* ---------- Arranque ---------- */
 aplicarIdioma();
