@@ -441,18 +441,37 @@ dialog.menu[open] li{opacity:1;translate:0 0}
   .hero.con-video .shell{grid-template-columns:1fr}
   .pilares{grid-template-columns:1fr}
   .pilar{border-right:0;margin-right:0;border-bottom:1px solid var(--line);padding-right:0}
-  .ficha{grid-template-columns:1fr}
-  .ficha__txt{border-left:0;border-top:1px solid var(--line)}
+  /* 🐛 En el móvil se trababa: el <dialog> y .ficha competían por el scroll, el video
+     ambiental con blur(18px) costaba demasiado y el giro capturaba el dedo.
+     Ahora hay UN solo scroll (.ficha): el reloj queda fijo arriba y la ficha sube
+     como una hoja por encima. */
+  dialog#ficha{overflow:hidden}
+  .ficha{display:block;height:100%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .ficha__vis{position:sticky;top:0;height:54svh;padding:2svh 6vw 4svh;justify-content:center}
+  .ficha__vis .lienzo{width:auto;height:34svh;max-width:72vw}
+  .ficha__vis>.eti{display:none}
+  .vistas{margin-top:12px;gap:8px}
+  .vistas button span{width:50px;height:50px}
+  .ficha__amb{filter:brightness(.4);scale:1}
+  .ficha__txt{position:relative;z-index:2;min-height:70svh;margin-top:-26px;border-left:0;border-radius:28px 28px 0 0;
+    box-shadow:0 -1px 0 var(--line-2),0 -24px 50px rgba(0,0,0,.65);padding-top:34px}
+  .ficha__txt::after{content:"";position:absolute;left:50%;top:12px;width:42px;height:4px;translate:-50% 0;border-radius:4px;background:rgba(234,215,168,.35)}
+  .ficha__txt::before{display:none}
+  .ficha h3{font-size:clamp(2rem,9vw,2.8rem)}
+  .ficha .ficha__top{position:sticky;top:0}
   .destacados{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .dest{padding:12px 10px}
   .dest b{font-size:15px}
   .ficha__agua{font-size:6rem}
-  .ficha__vis{padding:4vh 10vw}
-  .ficha__vis .lienzo{width:min(70%,320px)}
   .menu__cuerpo{grid-template-columns:1fr}
   .menu__vis{display:none}
-  .escena{grid-template-columns:1fr;grid-template-rows:55% 45%}
-  .escena__reloj .flota{width:min(46%,240px)}
+  /* Móvil: menos recorrido fijado (se sentía trabado), el reloj baja de la barra
+     y el velo del video va de arriba abajo porque el texto está debajo. */
+  .escenario{height:250vh}
+  .escena{grid-template-columns:1fr;grid-template-rows:52% 48%;padding-top:var(--bar)}
+  .escena__reloj{scale:1!important}
+  .escena__reloj .flota{width:min(40%,200px)}
+  .escena__fondo:has(video)::after{background:linear-gradient(180deg,rgba(7,7,10,.35) 0%,rgba(7,7,10,.15) 30%,rgba(7,7,10,.55) 52%,rgba(7,7,10,.92) 68%)}
   .escena__txt{padding:0;min-height:0;height:100%}
   .escena__txt article{justify-content:flex-start;inset:0 var(--pad)}
   .hero__hora{bottom:-34px}
@@ -1168,7 +1187,8 @@ dlg.addEventListener("click", (e) => {
 dlg.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") mover(1); if (e.key === "ArrowLeft") mover(-1); });
 // Arrastrar para girar la pieza (inclinación 3D, vuelve sola al soltar)
 let x0 = null;
-lienzo.addEventListener("pointerdown", (e) => { x0 = e.clientX; lienzo.setPointerCapture(e.pointerId); });
+// Solo el ratón captura el puntero: con el dedo, capturar impedía hacer scroll en el móvil.
+lienzo.addEventListener("pointerdown", (e) => { x0 = e.clientX; if (e.pointerType === "mouse") lienzo.setPointerCapture(e.pointerId); });
 lienzo.addEventListener("pointermove", (e) => {
   if (x0 === null) return;
   giro = Math.max(-40, Math.min(40, (e.clientX - x0) / 4));
